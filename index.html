@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Spend 5 minutes a day to put on the full armor of God. A free Scripture memory app.">
+<meta name="fa-standalone" content="1">
+<meta name="theme-color" content="#9a6b17">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Full Armor">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Full Armor</title>
+</head>
+<body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Figtree:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&display=swap">
+<style>
+/* Layout: one-column phone app, sticky XP header, fixed bottom tab bar, forged steel and brass */
+:root{
+  --bg:#eef0f4;--surface:#ffffff;--surface2:#f6f7fa;--ink:#1b2230;--muted:#5d6676;--line:#d6dae2;
+  --brass:#9a6b17;--brass-ink:#6e4c0f;--brass-soft:#f4e7c9;--steel:#3b4a63;--good:#2f7d4f;--good-soft:#dcefe3;--warn:#b0562e;--warn-soft:#f7e2d8;
+  --body:#c9ced8;--shadow:rgba(20,26,40,.12);
+  --f-display:"Cinzel","Trajan Pro",Georgia,serif;--f-ui:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;--f-text:"Literata",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121722;--surface:#1b2230;--surface2:#222b3b;--ink:#e9ecf2;--muted:#9aa3b3;--line:#2f394b;
+  --brass:#e0b45a;--brass-ink:#f1d395;--brass-soft:#3a3020;--steel:#9fb2d1;--good:#6fc394;--good-soft:#1d3527;--warn:#e38a63;--warn-soft:#3b2419;
+  --body:#3a4458;--shadow:rgba(0,0,0,.4);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121722;--surface:#1b2230;--surface2:#222b3b;--ink:#e9ecf2;--muted:#9aa3b3;--line:#2f394b;
+  --brass:#e0b45a;--brass-ink:#f1d395;--brass-soft:#3a3020;--steel:#9fb2d1;--good:#6fc394;--good-soft:#1d3527;--warn:#e38a63;--warn-soft:#3b2419;
+  --body:#3a4458;--shadow:rgba(0,0,0,.4);color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.wrap{max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.top .wrap{padding-block:10px;display:flex;align-items:center;gap:12px}
+.brand{font-family:var(--f-display);font-weight:700;letter-spacing:.06em;font-size:17px}
+.lvl{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:0}
+.lvl small{font-size:12px;color:var(--muted);white-space:nowrap}
+.xpbar{width:140px;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.xpbar i{display:block;height:100%;background:var(--brass);transition:width .5s}
+.streak{display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:var(--warn)}
+main{padding-block:16px 110px}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+nav.tabs .row{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+nav.tabs button{background:none;border:0;padding:8px 2px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:500;color:var(--muted)}
+nav.tabs button svg{width:22px;height:22px}
+nav.tabs button[aria-current="page"]{color:var(--brass)}
+h2{font-family:var(--f-display);font-weight:700;font-size:20px;letter-spacing:.04em;margin:4px 0 12px;text-wrap:balance}
+h3{font-size:15px;font-weight:600;margin:0 0 6px}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.stack{display:flex;flex-direction:column;gap:12px}
+.rowx{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:10px 14px;font-weight:600;font-size:15px}
+.btn.primary{background:var(--brass);border-color:var(--brass);color:var(--surface)}
+.btn.ghost{background:none}
+.btn.sm{padding:6px 10px;font-size:13px;border-radius:8px}
+.btn:disabled{opacity:.45;cursor:default}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--surface2);border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.chip.brass{background:var(--brass-soft);border-color:transparent;color:var(--brass-ink)}
+.chip.good{background:var(--good-soft);border-color:transparent;color:var(--good)}
+.chip.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.stat b{display:block;font-size:22px;font-variant-numeric:tabular-nums;font-weight:600}
+.stat span{font-size:12px;color:var(--muted)}
+.ref{font-family:var(--f-display);font-weight:700;font-size:18px;letter-spacing:.03em}
+.verse{font-family:var(--f-text);font-size:20px;line-height:1.65}
+.verse .w{display:inline}
+.verse .hid{display:inline-block;min-width:1.6em;border-bottom:2px solid var(--brass);color:transparent;cursor:pointer;line-height:1.2;margin-bottom:-2px}
+.verse .hid.show{color:var(--ink);border-color:transparent;background:var(--brass-soft);border-radius:4px}
+.verse .done{color:var(--ink)}
+.verse .blank{display:inline-block;border-bottom:2px solid var(--line);color:transparent;line-height:1.2}
+.verse .cur{border-color:var(--brass)}
+.letters{font-family:var(--f-text);font-size:22px;letter-spacing:.08em;word-spacing:.3em;line-height:1.8}
+.cue{display:flex;gap:10px;align-items:flex-start;background:var(--brass-soft);color:var(--brass-ink);border-radius:10px;padding:10px 12px;font-size:14px}
+.cue svg{flex:none;width:18px;height:18px;margin-top:2px}
+.grades{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.grades button{border-radius:10px;padding:10px 6px;border:1px solid var(--line);background:var(--surface2);display:flex;flex-direction:column;align-items:center;font-weight:600}
+.grades button small{font-weight:400;font-size:12px;color:var(--muted)}
+.grades .hard{border-color:var(--warn)}
+.grades .good{border-color:var(--steel)}
+.grades .easy{border-color:var(--good)}
+.typebox{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.progress{height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--brass)}
+.list .item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line)}
+.list .item:first-child{border-top:0}
+.item .grow{flex:1;min-width:0}
+.clip{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-family:var(--f-text);font-size:15px;color:var(--muted)}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600;color:var(--muted)}
+input[type=text],textarea,select{font:inherit;font-size:16px;color:var(--ink);background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+textarea{resize:vertical;min-height:80px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{border:0;background:none;padding:6px 12px;font-size:13px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--brass-soft);color:var(--brass-ink)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.room{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:left;min-height:96px;display:flex;flex-direction:column;gap:6px}
+.room .n{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brass)}
+.room .r{font-family:var(--f-display);font-weight:700;font-size:14px}
+.room.empty .r{color:var(--muted);font-family:var(--f-ui);font-weight:400;font-size:13px}
+.image{font-family:var(--f-text);font-style:italic;font-size:16px;line-height:1.55}
+.figure{display:flex;justify-content:center}
+.figure svg{width:min(240px,70vw);height:auto}
+.pc-on{fill:var(--brass);stroke:var(--brass-ink);stroke-width:1.5}
+.pc-off{fill:none;stroke:var(--muted);stroke-width:1.2;stroke-dasharray:3 3;opacity:.55}
+.bodyf{fill:var(--body)}
+.armory{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.piece{display:flex;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px}
+.piece svg{width:42px;height:42px;flex:none}
+.piece .t{font-family:var(--f-display);font-weight:700;font-size:13px;line-height:1.25}
+.piece.locked .t{color:var(--muted)}
+.badges{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.badge{display:flex;gap:8px;align-items:center;padding:8px 10px;border-radius:10px;border:1px solid var(--line);font-size:13px}
+.badge .dot{width:22px;height:22px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--line);color:var(--surface);font-size:12px;font-weight:700}
+.badge.on .dot{background:var(--brass)}
+.badge:not(.on){color:var(--muted)}
+.prayer .who{display:flex;align-items:center;gap:8px;font-size:13px}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--steel);color:var(--surface);display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+.prayer .body{font-family:var(--f-text);font-size:16px;margin:8px 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.upd{border-left:2px solid var(--brass);padding-left:10px;margin:6px 0;font-size:14px;border-radius:0;overflow-wrap:anywhere}
+.answered{border-color:var(--good)}
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(10,14,22,.72);display:grid;place-items:center;padding:24px}
+.levelup{background:var(--surface);border-radius:18px;padding:24px 20px;max-width:340px;width:100%;text-align:center;border:2px solid var(--brass)}
+.levelup svg{width:120px;height:120px}
+.levelup .big{font-family:var(--f-display);font-weight:700;font-size:22px;color:var(--brass);margin:6px 0}
+.glow{animation:rise .8s ease-out both}
+@keyframes rise{from{transform:scale(.6) rotate(-8deg);opacity:.2}to{transform:none;opacity:1}}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:40;background:var(--ink);color:var(--surface);padding:8px 14px;border-radius:999px;font-size:14px;font-weight:600;transition:opacity .3s}
+.empty{text-align:center;padding:24px 12px;color:var(--muted)}
+.empty svg{width:56px;height:56px;color:var(--brass);margin-bottom:6px}
+.confirm{background:var(--warn-soft);color:var(--warn);border-radius:10px;padding:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:14px}
+.counter{font-variant-numeric:tabular-nums}
+.bank{display:flex;flex-wrap:wrap;gap:8px}
+.tilebtn{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:8px 12px;font-family:var(--f-text);font-size:17px;line-height:1.3;text-align:left;max-width:100%}
+.tilebtn:disabled{opacity:.3;cursor:default}
+.built{font-family:var(--f-text);font-size:20px;line-height:1.65;min-height:2.4em;border-bottom:1px dashed var(--line);padding-bottom:6px}
+.pic{font-size:1.25em;line-height:1;font-style:normal}
+.strip{font-size:30px;letter-spacing:.12em;line-height:1.4;overflow-wrap:anywhere}
+.pw{cursor:pointer;border-radius:6px;padding:0 3px;border-bottom:2px dotted var(--brass)}
+.pw.on{background:var(--brass-soft)}
+.gear{background:none;border:0;padding:6px;margin-right:-6px;color:var(--muted);display:grid;place-items:center}
+.gear svg{width:22px;height:22px}
+.tagline{font-family:var(--f-text);font-style:italic;font-size:17px;line-height:1.5}
+.onb{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.onb button{border:1px solid var(--line);background:var(--surface2);border-radius:12px;padding:12px;text-align:left;display:flex;flex-direction:column;gap:2px;font-weight:600}
+.onb button small{font-weight:400;color:var(--muted);font-size:13px}
+.setrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 0;border-top:1px solid var(--line)}
+.setrow:first-of-type{border-top:0}
+.setrow .grow{flex:1;min-width:0}
+:root.big body{font-size:18px}
+:root.big .verse,:root.big .built{font-size:25px}
+:root.big .letters{font-size:27px}
+:root.big .btn{padding:13px 18px;font-size:18px}
+:root.big .tilebtn{font-size:21px;padding:11px 15px}
+:root.big .small{font-size:16px}
+:root.big .clip{font-size:17px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<header class="top"><div class="wrap">
+  <div class="brand">Full Armor</div>
+  <div class="streak" id="streak" title="Day streak"></div>
+  <div class="lvl"><small id="lvlname"></small><div class="xpbar"><i id="xpfill"></i></div></div>
+  <button class="gear" data-tab="settings" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+</div></header>
+
+<main class="wrap" id="app"></main>
+
+<nav class="tabs" aria-label="Sections"><div class="row" id="tabs"></div></nav>
+<div id="layer"></div>
+
+<script>
+const STARTER = [{"b":"Joshua","c":1,"v1":9,"v2":9,"bsb":"Have I not commanded you to be strong and courageous? Do not be afraid; do not be discouraged, for the LORD your God is with you wherever you go.”","kjv":"Have not I commanded thee? Be strong and of a good courage; be not afraid, neither be thou dismayed: for the Lord thy God is with thee whithersoever thou goest."},{"b":"Psalms","c":119,"v1":11,"v2":11,"bsb":"I have hidden Your word in my heart that I might not sin against You.","kjv":"Thy word have I hid in mine heart, that I might not sin against thee."},{"b":"Proverbs","c":3,"v1":5,"v2":6,"bsb":"Trust in the LORD with all your heart, and lean not on your own understanding; in all your ways acknowledge Him, and He will make your paths straight.","kjv":"Trust in the Lord with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths.","bsbParts":["Trust in the LORD with all your heart, and lean not on your own understanding;","in all your ways acknowledge Him, and He will make your paths straight."],"kjvParts":["Trust in the Lord with all thine heart; and lean not unto thine own understanding.","In all thy ways acknowledge him, and he shall direct thy paths."]},{"b":"Isaiah","c":40,"v1":31,"v2":31,"bsb":"But those who wait upon the LORD will renew their strength; they will mount up with wings like eagles; they will run and not grow weary, they will walk and not faint.","kjv":"But they that wait upon the Lord shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary; and they shall walk, and not faint."},{"b":"Jeremiah","c":29,"v1":11,"v2":11,"bsb":"For I know the plans I have for you, declares the LORD, plans to prosper you and not to harm you, to give you a future and a hope.","kjv":"For I know the thoughts that I think toward you, saith the Lord, thoughts of peace, and not of evil, to give you an expected end."},{"b":"Matthew","c":6,"v1":33,"v2":33,"bsb":"But seek first the kingdom of God and His righteousness, and all these things will be added unto you.","kjv":"But seek ye first the kingdom of God, and his righteousness; and all these things shall be added unto you."},{"b":"Matthew","c":11,"v1":28,"v2":28,"bsb":"Come to Me, all you who are weary and burdened, and I will give you rest.","kjv":"Come unto me, all ye that labour and are heavy laden, and I will give you rest."},{"b":"John","c":3,"v1":16,"v2":16,"bsb":"For God so loved the world that He gave His one and only Son, that everyone who believes in Him shall not perish but have eternal life.","kjv":"For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life."},{"b":"John","c":14,"v1":6,"v2":6,"bsb":"Jesus answered, “I am the way and the truth and the life. No one comes to the Father except through Me.","kjv":"Jesus saith unto him, I am the way, the truth, and the life: no man cometh unto the Father, but by me."},{"b":"Romans","c":3,"v1":23,"v2":23,"bsb":"for all have sinned and fall short of the glory of God,","kjv":"For all have sinned, and come short of the glory of God;"},{"b":"Romans","c":6,"v1":23,"v2":23,"bsb":"For the wages of sin is death, but the gift of God is eternal life in Christ Jesus our Lord.","kjv":"For the wages of sin is death; but the gift of God is eternal life through Jesus Christ our Lord."},{"b":"Romans","c":8,"v1":28,"v2":28,"bsb":"And we know that God works all things together for the good of those who love Him, who are called according to His purpose.","kjv":"And we know that all things work together for good to them that love God, to them who are the called according to his purpose."},{"b":"Romans","c":12,"v1":2,"v2":2,"bsb":"Do not be conformed to this world, but be transformed by the renewing of your mind. Then you will be able to test and approve what is the good, pleasing, and perfect will of God.","kjv":"And be not conformed to this world: but be ye transformed by the renewing of your mind, that ye may prove what is that good, and acceptable, and perfect, will of God."},{"b":"2 Corinthians","c":5,"v1":17,"v2":17,"bsb":"Therefore if anyone is in Christ, he is a new creation. The old has passed away. Behold, the new has come!","kjv":"Therefore if any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new."},{"b":"Galatians","c":2,"v1":20,"v2":20,"bsb":"I have been crucified with Christ, and I no longer live, but Christ lives in me. The life I live in the body, I live by faith in the Son of God, who loved me and gave Himself up for me.","kjv":"I am crucified with Christ: nevertheless I live; yet not I, but Christ liveth in me: and the life which I now live in the flesh I live by the faith of the Son of God, who loved me, and gave himself for me."},{"b":"Ephesians","c":2,"v1":8,"v2":9,"bsb":"For it is by grace you have been saved through faith, and this not from yourselves; it is the gift of God, not by works, so that no one can boast.","kjv":"For by grace are ye saved through faith; and that not of yourselves: it is the gift of God: Not of works, lest any man should boast.","bsbParts":["For it is by grace you have been saved through faith, and this not from yourselves; it is the gift of God,","not by works, so that no one can boast."],"kjvParts":["For by grace are ye saved through faith; and that not of yourselves: it is the gift of God:","Not of works, lest any man should boast."]},{"b":"Ephesians","c":6,"v1":10,"v2":11,"bsb":"Finally, be strong in the Lord and in His mighty power. Put on the full armor of God, so that you can make your stand against the devil’s schemes.","kjv":"Finally, my brethren, be strong in the Lord, and in the power of his might. Put on the whole armour of God, that ye may be able to stand against the wiles of the devil.","bsbParts":["Finally, be strong in the Lord and in His mighty power.","Put on the full armor of God, so that you can make your stand against the devil’s schemes."],"kjvParts":["Finally, my brethren, be strong in the Lord, and in the power of his might.","Put on the whole armour of God, that ye may be able to stand against the wiles of the devil."]},{"b":"Philippians","c":4,"v1":6,"v2":7,"bsb":"Be anxious for nothing, but in everything, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which surpasses all understanding, will guard your hearts and your minds in Christ Jesus.","kjv":"Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God. And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus.","bsbParts":["Be anxious for nothing, but in everything, by prayer and petition, with thanksgiving, present your requests to God.","And the peace of God, which surpasses all understanding, will guard your hearts and your minds in Christ Jesus."],"kjvParts":["Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God.","And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus."]},{"b":"Philippians","c":4,"v1":13,"v2":13,"bsb":"I can do all things through Christ who gives me strength.","kjv":"I can do all things through Christ which strengtheneth me."},{"b":"2 Timothy","c":3,"v1":16,"v2":17,"bsb":"All Scripture is God-breathed and is useful for instruction, for conviction, for correction, and for training in righteousness, so that the man of God may be complete, fully equipped for every good work.","kjv":"All scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness: That the man of God may be perfect, throughly furnished unto all good works.","bsbParts":["All Scripture is God-breathed and is useful for instruction, for conviction, for correction, and for training in righteousness,","so that the man of God may be complete, fully equipped for every good work."],"kjvParts":["All scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness:","That the man of God may be perfect, throughly furnished unto all good works."]},{"b":"Hebrews","c":11,"v1":1,"v2":1,"bsb":"Now faith is the assurance of what we hope for and the certainty of what we do not see.","kjv":"Now faith is the substance of things hoped for, the evidence of things not seen."},{"b":"James","c":1,"v1":5,"v2":5,"bsb":"Now if any of you lacks wisdom, he should ask God, who gives generously to all without finding fault, and it will be given to him.","kjv":"If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him."},{"b":"1 Peter","c":5,"v1":7,"v2":7,"bsb":"Cast all your anxiety on Him, because He cares for you.","kjv":"Casting all your care upon him; for he careth for you."},{"b":"1 John","c":1,"v1":9,"v2":9,"bsb":"If we confess our sins, He is faithful and just to forgive us our sins and to cleanse us from all unrighteousness.","kjv":"If we confess our sins, he is faithful and just to forgive us our sins, and to cleanse us from all unrighteousness."}];
+const FOUNDATIONS = [{"t":"Assurance of salvation","b":"1 John","c":5,"v1":11,"v2":12,"bsb":"And this is that testimony: God has given us eternal life, and this life is in His Son. Whoever has the Son has life; whoever does not have the Son of God does not have life.","kjv":"And this is the record, that God hath given to us eternal life, and this life is in his Son. He that hath the Son hath life; and he that hath not the Son of God hath not life.","bsbParts":["And this is that testimony: God has given us eternal life, and this life is in His Son.","Whoever has the Son has life; whoever does not have the Son of God does not have life."],"kjvParts":["And this is the record, that God hath given to us eternal life, and this life is in his Son.","He that hath the Son hath life; and he that hath not the Son of God hath not life."]},{"t":"Answered prayer","b":"John","c":16,"v1":24,"v2":24,"bsb":"Until now you have not asked for anything in My name. Ask and you will receive, so that your joy may be complete.","kjv":"Hitherto have ye asked nothing in my name: ask, and ye shall receive, that your joy may be full."},{"t":"Victory over temptation","b":"1 Corinthians","c":10,"v1":13,"v2":13,"bsb":"No temptation has seized you except what is common to man. And God is faithful; He will not let you be tempted beyond what you can bear. But when you are tempted, He will also provide an escape, so that you can stand up under it.","kjv":"There hath no temptation taken you but such as is common to man: but God is faithful, who will not suffer you to be tempted above that ye are able; but will with the temptation also make a way to escape, that ye may be able to bear it."},{"t":"Forgiveness","b":"1 John","c":1,"v1":9,"v2":9,"bsb":"If we confess our sins, He is faithful and just to forgive us our sins and to cleanse us from all unrighteousness.","kjv":"If we confess our sins, he is faithful and just to forgive us our sins, and to cleanse us from all unrighteousness."},{"t":"Guidance","b":"Proverbs","c":3,"v1":5,"v2":6,"bsb":"Trust in the LORD with all your heart, and lean not on your own understanding; in all your ways acknowledge Him, and He will make your paths straight.","kjv":"Trust in the Lord with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths.","bsbParts":["Trust in the LORD with all your heart, and lean not on your own understanding;","in all your ways acknowledge Him, and He will make your paths straight."],"kjvParts":["Trust in the Lord with all thine heart; and lean not unto thine own understanding.","In all thy ways acknowledge him, and he shall direct thy paths."]},{"t":"Christ at the center","b":"2 Corinthians","c":5,"v1":17,"v2":17,"bsb":"Therefore if anyone is in Christ, he is a new creation. The old has passed away. Behold, the new has come!","kjv":"Therefore if any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new."},{"t":"Christ at the center","b":"Galatians","c":2,"v1":20,"v2":20,"bsb":"I have been crucified with Christ, and I no longer live, but Christ lives in me. The life I live in the body, I live by faith in the Son of God, who loved me and gave Himself up for me.","kjv":"I am crucified with Christ: nevertheless I live; yet not I, but Christ liveth in me: and the life which I now live in the flesh I live by the faith of the Son of God, who loved me, and gave himself for me."},{"t":"Obedience","b":"Romans","c":12,"v1":1,"v2":1,"bsb":"Therefore I urge you, brothers, on account of God’s mercy, to offer your bodies as living sacrifices, holy and pleasing to God, which is your spiritual service of worship.","kjv":"I beseech you therefore, brethren, by the mercies of God, that ye present your bodies a living sacrifice, holy, acceptable unto God, which is your reasonable service."},{"t":"Obedience","b":"John","c":14,"v1":21,"v2":21,"bsb":"Whoever has My commandments and keeps them is the one who loves Me. The one who loves Me will be loved by My Father, and I will love him and reveal Myself to him.”","kjv":"He that hath my commandments, and keepeth them, he it is that loveth me: and he that loveth me shall be loved of my Father, and I will love him, and will manifest myself to him."},{"t":"The Word","b":"2 Timothy","c":3,"v1":16,"v2":17,"bsb":"All Scripture is God-breathed and is useful for instruction, for conviction, for correction, and for training in righteousness, so that the man of God may be complete, fully equipped for every good work.","kjv":"All scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness: That the man of God may be perfect, throughly furnished unto all good works.","bsbParts":["All Scripture is God-breathed and is useful for instruction, for conviction, for correction, and for training in righteousness,","so that the man of God may be complete, fully equipped for every good work."],"kjvParts":["All scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness:","That the man of God may be perfect, throughly furnished unto all good works."]},{"t":"The Word","b":"Joshua","c":1,"v1":8,"v2":8,"bsb":"This Book of the Law must not depart from your mouth; meditate on it day and night, so that you may be careful to do everything written in it. For then you will prosper and succeed in all you do.","kjv":"This book of the law shall not depart out of thy mouth; but thou shalt meditate therein day and night, that thou mayest observe to do according to all that is written therein: for then thou shalt make thy way prosperous, and then thou shalt have good success."},{"t":"Prayer","b":"John","c":15,"v1":7,"v2":7,"bsb":"If you remain in Me and My words remain in you, ask whatever you wish, and it will be done for you.","kjv":"If ye abide in me, and my words abide in you, ye shall ask what ye will, and it shall be done unto you."},{"t":"Prayer","b":"Philippians","c":4,"v1":6,"v2":7,"bsb":"Be anxious for nothing, but in everything, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which surpasses all understanding, will guard your hearts and your minds in Christ Jesus.","kjv":"Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God. And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus.","bsbParts":["Be anxious for nothing, but in everything, by prayer and petition, with thanksgiving, present your requests to God.","And the peace of God, which surpasses all understanding, will guard your hearts and your minds in Christ Jesus."],"kjvParts":["Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God.","And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus."]},{"t":"Fellowship","b":"Matthew","c":18,"v1":20,"v2":20,"bsb":"For where two or three gather together in My name, there am I with them.”","kjv":"For where two or three are gathered together in my name, there am I in the midst of them."},{"t":"Fellowship","b":"Hebrews","c":10,"v1":24,"v2":25,"bsb":"And let us consider how to spur one another on to love and good deeds. Let us not neglect meeting together, as some have made a habit, but let us encourage one another, and all the more as you see the Day approaching.","kjv":"And let us consider one another to provoke unto love and to good works: Not forsaking the assembling of ourselves together, as the manner of some is; but exhorting one another: and so much the more, as ye see the day approaching.","bsbParts":["And let us consider how to spur one another on to love and good deeds.","Let us not neglect meeting together, as some have made a habit, but let us encourage one another, and all the more as you see the Day approaching."],"kjvParts":["And let us consider one another to provoke unto love and to good works:","Not forsaking the assembling of ourselves together, as the manner of some is; but exhorting one another: and so much the more, as ye see the day approaching."]},{"t":"Witnessing","b":"Matthew","c":4,"v1":19,"v2":19,"bsb":"“Come, follow Me,” Jesus said, “and I will make you fishers of men.”","kjv":"And he saith unto them, Follow me, and I will make you fishers of men."},{"t":"Witnessing","b":"Romans","c":1,"v1":16,"v2":16,"bsb":"I am not ashamed of the gospel, because it is the power of God for salvation to everyone who believes, first to the Jew, then to the Greek.","kjv":"For I am not ashamed of the gospel of Christ: for it is the power of God unto salvation to every one that believeth; to the Jew first, and also to the Greek."},{"t":"All have sinned","b":"Romans","c":3,"v1":23,"v2":23,"bsb":"for all have sinned and fall short of the glory of God,","kjv":"For all have sinned, and come short of the glory of God;"},{"t":"All have sinned","b":"Isaiah","c":53,"v1":6,"v2":6,"bsb":"We all like sheep have gone astray, each one has turned to his own way; and the LORD has laid upon Him the iniquity of us all.","kjv":"All we like sheep have gone astray; we have turned every one to his own way; and the Lord hath laid on him the iniquity of us all."},{"t":"Sin's penalty","b":"Romans","c":6,"v1":23,"v2":23,"bsb":"For the wages of sin is death, but the gift of God is eternal life in Christ Jesus our Lord.","kjv":"For the wages of sin is death; but the gift of God is eternal life through Jesus Christ our Lord."},{"t":"Sin's penalty","b":"Hebrews","c":9,"v1":27,"v2":27,"bsb":"Just as man is appointed to die once, and after that to face judgment,","kjv":"And as it is appointed unto men once to die, but after this the judgment:"},{"t":"Christ paid the penalty","b":"Romans","c":5,"v1":8,"v2":8,"bsb":"But God proves His love for us in this: While we were still sinners, Christ died for us.","kjv":"But God commendeth his love toward us, in that, while we were yet sinners, Christ died for us."},{"t":"Christ paid the penalty","b":"1 Peter","c":3,"v1":18,"v2":18,"bsb":"For Christ also suffered for sins once for all, the righteous for the unrighteous, to bring you to God. He was put to death in the body but made alive in the Spirit,","kjv":"For Christ also hath once suffered for sins, the just for the unjust, that he might bring us to God, being put to death in the flesh, but quickened by the Spirit:"},{"t":"Not by works","b":"Ephesians","c":2,"v1":8,"v2":9,"bsb":"For it is by grace you have been saved through faith, and this not from yourselves; it is the gift of God, not by works, so that no one can boast.","kjv":"For by grace are ye saved through faith; and that not of yourselves: it is the gift of God: Not of works, lest any man should boast.","bsbParts":["For it is by grace you have been saved through faith, and this not from yourselves; it is the gift of God,","not by works, so that no one can boast."],"kjvParts":["For by grace are ye saved through faith; and that not of yourselves: it is the gift of God:","Not of works, lest any man should boast."]},{"t":"Not by works","b":"Titus","c":3,"v1":5,"v2":5,"bsb":"He saved us, not by the righteous deeds we had done, but according to His mercy, through the washing of new birth and renewal by the Holy Spirit.","kjv":"Not by works of righteousness which we have done, but according to his mercy he saved us, by the washing of regeneration, and renewing of the Holy Ghost;"},{"t":"Receiving Christ","b":"John","c":1,"v1":12,"v2":12,"bsb":"But to all who did receive Him, to those who believed in His name, He gave the right to become children of God—","kjv":"But as many as received him, to them gave he power to become the sons of God, even to them that believe on his name:"},{"t":"Receiving Christ","b":"Revelation","c":3,"v1":20,"v2":20,"bsb":"Behold, I stand at the door and knock. If anyone hears My voice and opens the door, I will come in and dine with him, and he with Me.","kjv":"Behold, I stand at the door, and knock: if any man hear my voice, and open the door, I will come in to him, and will sup with him, and he with me."},{"t":"Assurance","b":"1 John","c":5,"v1":13,"v2":13,"bsb":"I have written these things to you who believe in the name of the Son of God, so that you may know that you have eternal life.","kjv":"These things have I written unto you that believe on the name of the Son of God; that ye may know that ye have eternal life, and that ye may believe on the name of the Son of God."},{"t":"Assurance","b":"John","c":5,"v1":24,"v2":24,"bsb":"Truly, truly, I tell you, whoever hears My word and believes Him who sent Me has eternal life and will not come under judgment. Indeed, he has crossed over from death to life.","kjv":"Verily, verily, I say unto you, He that heareth my word, and believeth on him that sent me, hath everlasting life, and shall not come into condemnation; but is passed from death unto life."},{"t":"Trusting God","b":"Isaiah","c":26,"v1":3,"v2":3,"bsb":"You will keep in perfect peace the steadfast of mind, because he trusts in You.","kjv":"Thou wilt keep him in perfect peace, whose mind is stayed on thee: because he trusteth in thee."},{"t":"Trusting God","b":"1 Peter","c":5,"v1":7,"v2":7,"bsb":"Cast all your anxiety on Him, because He cares for you.","kjv":"Casting all your care upon him; for he careth for you."},{"t":"Trusting God","b":"Romans","c":8,"v1":28,"v2":28,"bsb":"And we know that God works all things together for the good of those who love Him, who are called according to His purpose.","kjv":"And we know that all things work together for good to them that love God, to them who are the called according to his purpose."},{"t":"Strength","b":"Isaiah","c":40,"v1":31,"v2":31,"bsb":"But those who wait upon the LORD will renew their strength; they will mount up with wings like eagles; they will run and not grow weary, they will walk and not faint.","kjv":"But they that wait upon the Lord shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary; and they shall walk, and not faint."},{"t":"Strength","b":"Philippians","c":4,"v1":13,"v2":13,"bsb":"I can do all things through Christ who gives me strength.","kjv":"I can do all things through Christ which strengtheneth me."},{"t":"Love","b":"1 John","c":4,"v1":10,"v2":10,"bsb":"And love consists in this: not that we loved God, but that He loved us and sent His Son as the atoning sacrifice for our sins.","kjv":"Herein is love, not that we loved God, but that he loved us, and sent his Son to be the propitiation for our sins."},{"t":"Love","b":"John","c":13,"v1":34,"v2":35,"bsb":"A new commandment I give you: Love one another. As I have loved you, so you also must love one another. By this everyone will know that you are My disciples, if you love one another.”","kjv":"A new commandment I give unto you, That ye love one another; as I have loved you, that ye also love one another. By this shall all men know that ye are my disciples, if ye have love one to another.","bsbParts":["A new commandment I give you: Love one another. As I have loved you, so you also must love one another.","By this everyone will know that you are My disciples, if you love one another.”"],"kjvParts":["A new commandment I give unto you, That ye love one another; as I have loved you, that ye also love one another.","By this shall all men know that ye are my disciples, if ye have love one to another."]}];
+const BOOKS = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel", "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "Song of Solomon", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah", "Malachi", "Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1 Corinthians", "2 Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians", "1 Timothy", "2 Timothy", "Titus", "Philemon", "Hebrews", "James", "1 Peter", "2 Peter", "1 John", "2 John", "3 John", "Jude", "Revelation"];
+const KIDS = [{"t":"God made everything","b":"Genesis","c":1,"v1":1,"v2":1,"bsb":"In the beginning God created the heavens and the earth.","kjv":"In the beginning God created the heaven and the earth."},{"t":"When I'm afraid","b":"Psalms","c":56,"v1":3,"v2":3,"bsb":"When I am afraid, I put my trust in You.","kjv":"What time I am afraid, I will trust in thee."},{"t":"God's Word lights my way","b":"Psalms","c":119,"v1":105,"v2":105,"bsb":"Your word is a lamp to my feet and a light to my path.","kjv":"נ NUN. Thy word is a lamp unto my feet, and a light unto my path."},{"t":"God takes care of me","b":"Psalms","c":23,"v1":1,"v2":1,"bsb":"A Psalm of David. The LORD is my shepherd; I shall not want.","kjv":"A Psalm of David. The Lord is my shepherd; I shall not want."},{"t":"Be brave","b":"Joshua","c":1,"v1":9,"v2":9,"bsb":"Have I not commanded you to be strong and courageous? Do not be afraid; do not be discouraged, for the LORD your God is with you wherever you go.”","kjv":"Have not I commanded thee? Be strong and of a good courage; be not afraid, neither be thou dismayed: for the Lord thy God is with thee whithersoever thou goest."},{"t":"God's great love","b":"John","c":3,"v1":16,"v2":16,"bsb":"For God so loved the world that He gave His one and only Son, that everyone who believes in Him shall not perish but have eternal life.","kjv":"For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life."},{"t":"Jesus is the way","b":"John","c":14,"v1":6,"v2":6,"bsb":"Jesus answered, “I am the way and the truth and the life. No one comes to the Father except through Me.","kjv":"Jesus saith unto him, I am the way, the truth, and the life: no man cometh unto the Father, but by me."},{"t":"Be kind","b":"Ephesians","c":4,"v1":32,"v2":32,"bsb":"Be kind and tenderhearted to one another, forgiving each other just as in Christ God forgave you.","kjv":"And be ye kind one to another, tenderhearted, forgiving one another, even as God for Christ’s sake hath forgiven you."},{"t":"Strength in Christ","b":"Philippians","c":4,"v1":13,"v2":13,"bsb":"I can do all things through Christ who gives me strength.","kjv":"I can do all things through Christ which strengtheneth me."},{"t":"Why we love","b":"1 John","c":4,"v1":19,"v2":19,"bsb":"We love because He first loved us.","kjv":"We love him, because he first loved us."},{"t":"Rejoice today","b":"Psalms","c":118,"v1":24,"v2":24,"bsb":"This is the day that the LORD has made; we will rejoice and be glad in it.","kjv":"This is the day which the Lord hath made; we will rejoice and be glad in it."},{"t":"Good friends","b":"Proverbs","c":17,"v1":17,"v2":17,"bsb":"A friend loves at all times, and a brother is born for adversity.","kjv":"A friend loveth at all times, and a brother is born for adversity."},{"t":"Let your light shine","b":"Matthew","c":5,"v1":16,"v2":16,"bsb":"In the same way, let your light shine before men, that they may see your good deeds and glorify your Father in heaven.","kjv":"Let your light so shine before men, that they may see your good works, and glorify your Father which is in heaven."},{"t":"Obey your parents","b":"Colossians","c":3,"v1":20,"v2":20,"bsb":"Children, obey your parents in everything, for this is pleasing to the Lord.","kjv":"Children, obey your parents in all things: for this is well pleasing unto the Lord."},{"t":"Always give thanks","b":"1 Thessalonians","c":5,"v1":16,"v2":18,"bsb":"Rejoice at all times. Pray without ceasing. Give thanks in every circumstance, for this is God’s will for you in Christ Jesus.","kjv":"Rejoice evermore. Pray without ceasing. In every thing give thanks: for this is the will of God in Christ Jesus concerning you.","bsbParts":["Rejoice at all times.","Pray without ceasing.","Give thanks in every circumstance, for this is God’s will for you in Christ Jesus."],"kjvParts":["Rejoice evermore.","Pray without ceasing.","In every thing give thanks: for this is the will of God in Christ Jesus concerning you."]},{"t":"God is my help","b":"Psalms","c":46,"v1":1,"v2":1,"bsb":"For the choirmaster. Of the sons of Korah. According to Alamoth. A song. God is our refuge and strength, an ever-present help in times of trouble.","kjv":"To the chief Musician for the sons of Korah, A Song upon Alamoth. God is our refuge and strength, a very present help in trouble."},{"t":"Do not fear","b":"Isaiah","c":41,"v1":10,"v2":10,"bsb":"Do not fear, for I am with you; do not be afraid, for I am your God. I will strengthen you; I will surely help you; I will uphold you with My right hand of righteousness.","kjv":"Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness."},{"t":"Jesus never changes","b":"Hebrews","c":13,"v1":8,"v2":8,"bsb":"Jesus Christ is the same yesterday and today and forever.","kjv":"Jesus Christ the same yesterday, and to day, and for ever."},{"t":"Give God your worries","b":"1 Peter","c":5,"v1":7,"v2":7,"bsb":"Cast all your anxiety on Him, because He cares for you.","kjv":"Casting all your care upon him; for he careth for you."},{"t":"Trust the Lord","b":"Proverbs","c":3,"v1":5,"v2":6,"bsb":"Trust in the LORD with all your heart, and lean not on your own understanding; in all your ways acknowledge Him, and He will make your paths straight.","kjv":"Trust in the Lord with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths.","bsbParts":["Trust in the LORD with all your heart, and lean not on your own understanding;","in all your ways acknowledge Him, and He will make your paths straight."],"kjvParts":["Trust in the Lord with all thine heart; and lean not unto thine own understanding.","In all thy ways acknowledge him, and he shall direct thy paths."]},{"t":"Fruit of the Spirit","b":"Galatians","c":5,"v1":22,"v2":23,"bsb":"But the fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control. Against such things there is no law.","kjv":"But the fruit of the Spirit is love, joy, peace, longsuffering, gentleness, goodness, faith, Meekness, temperance: against such there is no law.","bsbParts":["But the fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness,","gentleness, and self-control. Against such things there is no law."],"kjvParts":["But the fruit of the Spirit is love, joy, peace, longsuffering, gentleness, goodness, faith,","Meekness, temperance: against such there is no law."]},{"t":"Put on the armor","b":"Ephesians","c":6,"v1":11,"v2":11,"bsb":"Put on the full armor of God, so that you can make your stand against the devil’s schemes.","kjv":"Put on the whole armour of God, that ye may be able to stand against the wiles of the devil."},{"t":"A Savior is born","b":"Luke","c":2,"v1":11,"v2":11,"bsb":"Today in the city of David a Savior has been born to you. He is Christ the Lord!","kjv":"For unto you is born this day in the city of David a Saviour, which is Christ the Lord."},{"t":"God's gift","b":"Romans","c":6,"v1":23,"v2":23,"bsb":"For the wages of sin is death, but the gift of God is eternal life in Christ Jesus our Lord.","kjv":"For the wages of sin is death; but the gift of God is eternal life through Jesus Christ our Lord."}];
+const PICS = {
+god:["👑","☀️","🙌"],lord:["👑","🙌"],father:["👨‍👧","👑"],jesus:["✝️","🕊️"],christ:["✝️","👑"],son:["👦","✝️"],spirit:["🕊️","🔥","💨"],holy:["✨","🕊️"],savior:["🛟","✝️"],king:["👑"],shepherd:["🐑","🦯"],lamb:["🐑"],sheep:["🐑"],
+love:["❤️","🤗"],loved:["❤️"],beloved:["❤️"],heart:["❤️"],joy:["😄","🎉"],rejoice:["🎉","😄"],glad:["😊"],peace:["🕊️","☮️"],hope:["🌅","⚓"],faith:["🙏","🛡️"],trust:["🤝","🙏"],believe:["🙏","💡"],believes:["🙏"],
+pray:["🙏"],prayer:["🙏"],prayers:["🙏"],petition:["📜","🙏"],thank:["🙏","🎁"],thanks:["🙏","🎁"],thanksgiving:["🙏","🦃"],praise:["🙌","🎶"],sing:["🎶"],song:["🎶"],worship:["🙌"],
+strength:["💪","🏋️"],strong:["💪"],power:["⚡","💪"],mighty:["💪","⛰️"],weak:["🥀"],brave:["🦁"],courage:["🦁"],afraid:["😨"],fear:["😨","👻"],dismayed:["😟"],worry:["😟"],anxious:["😰"],anxiety:["😰"],anxieties:["😰"],care:["🤲","💗"],cares:["🤲"],
+light:["💡","☀️","🕯️"],lamp:["🪔","🕯️"],darkness:["🌑"],dark:["🌑"],shine:["✨","☀️"],sun:["☀️"],star:["⭐"],stars:["✨"],fire:["🔥"],flaming:["🔥"],
+word:["📖","💬"],words:["📖","💬"],scripture:["📜","📖"],law:["📜","⚖️"],truth:["✅","📏"],true:["✅"],wisdom:["🦉","🧠"],wise:["🦉"],understanding:["🧠","💡"],knowledge:["🧠","📚"],mind:["🧠"],teach:["🧑‍🏫"],teaching:["🧑‍🏫"],
+life:["🌱","❤️"],live:["🌱"],living:["🌱"],eternal:["♾️"],everlasting:["♾️"],forever:["♾️"],death:["💀","⚰️"],die:["⚰️"],died:["⚰️"],perish:["🥀"],dead:["⚰️"],rose:["🌄"],raised:["🌄"],grave:["🪦"],
+sin:["❌","🐍"],sins:["❌"],sinned:["❌"],sinners:["❌"],wages:["💰","💵"],gift:["🎁"],grace:["🎁","🤲"],mercy:["🤲","💗"],forgive:["🤝","🧽"],forgiven:["🤝"],forgiving:["🤝"],cleanse:["🧼","💧"],cleanses:["🧼"],purify:["🧼"],righteousness:["⚖️","🛡️"],righteous:["⚖️"],unrighteousness:["❌"],
+world:["🌍"],earth:["🌍"],heaven:["☁️","🌤️"],heavens:["☁️","🌌"],sky:["🌤️"],sea:["🌊"],water:["💧","🌊"],waters:["🌊"],river:["🏞️"],rain:["🌧️"],mountain:["⛰️"],mountains:["⛰️"],rock:["🪨"],stone:["🪨"],
+eagle:["🦅"],eagles:["🦅"],wings:["🪽","🦅"],fly:["🦅"],soar:["🦅"],bird:["🐦"],birds:["🐦"],lion:["🦁"],snake:["🐍"],serpent:["🐍"],fish:["🐟"],fishers:["🎣"],
+tree:["🌳"],vine:["🍇"],branches:["🌿"],fruit:["🍎","🍇"],seed:["🌱"],flower:["🌸"],grass:["🌾"],bread:["🍞"],wine:["🍷"],cup:["🏆","🍷"],
+run:["🏃"],walk:["🚶"],path:["🛤️"],paths:["🛤️"],way:["🛤️","🚪"],road:["🛣️"],door:["🚪"],knock:["🚪"],house:["🏠"],home:["🏠"],feet:["🦶"],foot:["🦶"],hand:["✋"],hands:["🙌"],eyes:["👀"],ear:["👂"],ears:["👂"],mouth:["👄"],tongue:["👅"],
+armor:["🛡️","⚔️"],armour:["🛡️"],shield:["🛡️"],sword:["⚔️","🗡️"],helmet:["⛑️","🪖"],belt:["🥋"],breastplate:["🛡️"],battle:["⚔️"],enemy:["👹"],devil:["😈"],evil:["😈"],schemes:["🕸️"],wiles:["🕸️"],arrows:["🏹"],stand:["🧍","🏔️"],
+new:["🆕","🌱"],creation:["🌍","✨"],created:["✨"],beginning:["🌅","1️⃣"],end:["🏁"],day:["☀️","📅"],days:["📅"],night:["🌙"],morning:["🌅"],today:["📅"],tomorrow:["📆"],time:["⏰"],times:["⏰"],
+plans:["🗺️","📋"],plan:["🗺️"],future:["🔮","🌅"],work:["🔨"],works:["🔨"],good:["👍","⭐"],together:["🤝"],all:["💯"],everything:["💯"],nothing:["0️⃣"],
+gave:["🎁"],give:["🎁"],given:["🎁"],receive:["📥"],seek:["🔍"],find:["🔍"],ask:["🙋"],knocks:["🚪"],rest:["😴","🛌"],weary:["😩"],burdened:["🎒"],heavy:["🎒"],yoke:["🐂"],
+child:["🧒"],children:["🧒","👧"],parents:["👨‍👩‍👧"],mother:["👩"],friend:["🤝"],friends:["🤝"],brother:["👦"],brothers:["👬"],neighbor:["🏡"],man:["🧔"],people:["👥"],church:["⛪"],
+kind:["🤗"],kindness:["🤗"],gentle:["🕊️"],gentleness:["🕊️"],patience:["⏳"],patient:["⏳"],humble:["🙇"],obey:["👂","✅"],commandments:["📜"],commandment:["📜"],
+cross:["✝️"],blood:["🩸"],body:["🧍"],crown:["👑"],gold:["🥇"],treasure:["💎"],money:["💰"],riches:["💎"],kingdom:["🏰"],throne:["🪑","👑"],gate:["🚪"],narrow:["↔️"],
+salvation:["🛟","⛑️"],saved:["🛟"],save:["🛟"],gospel:["📣","📖"],peaceful:["🕊️"],help:["🆘","🤲"],refuge:["🏰","⛺"],shelter:["⛺"],fortress:["🏰"],
+renewed:["🔄"],renew:["🔄"],transformed:["🦋"],conformed:["📦"],sacrifice:["🔥"],
+want:["🤲"],green:["🌿"],pastures:["🌾"],still:["🌊"],soul:["💖"],valley:["🏞️"],shadow:["🌑"],table:["🍽️"],oil:["🫒"],anointed:["🫒"]
+};
+const PIC_STOP=new Set(["the","and","of","to","in","a","that","is","for","he","his","with","be","you","your","i","me","my","it","not","as","but","by","on","so","who","will","from","this","are","have","has","was","were","at","or","an","them","they","their","we","us","our","him","her","she","all","shall","which","what","when","there","then","do","may","no","yea","ye","thee","thou","thy","unto","hath","o"]);
+const VCOUNT = [[31,25,24,26,32,22,24,22,29,32,32,20,18,24,21,16,27,33,38,18,34,24,20,67,34,35,46,22,35,43,55,32,20,31,29,43,36,30,23,23,57,38,34,34,28,34,31,22,33,26],[22,25,22,31,23,30,25,32,35,29,10,51,22,31,27,36,16,27,25,26,36,31,33,18,40,37,21,43,46,38,18,35,23,35,35,38,29,31,43,38],[17,16,17,35,19,30,38,36,24,20,47,8,59,57,33,34,16,30,37,27,24,33,44,23,55,46,34],[54,34,51,49,31,27,89,26,23,36,35,16,33,45,41,50,13,32,22,29,35,41,30,25,18,65,23,31,40,16,54,42,56,29,34,13],[46,37,29,49,33,25,26,20,29,22,32,32,18,29,23,22,20,22,21,20,23,30,25,22,19,19,26,68,29,20,30,52,29,12],[18,24,17,24,15,27,26,35,27,43,23,24,33,15,63,10,18,28,51,9,45,34,16,33],[36,23,31,24,31,40,25,35,57,18,40,15,25,20,20,31,13,31,30,48,25],[22,23,18,22],[28,36,21,22,12,21,17,22,27,27,15,25,23,52,35,23,58,30,24,42,15,23,29,22,44,25,12,25,11,31,13],[27,32,39,12,25,23,29,18,13,19,27,31,39,33,37,23,29,33,43,26,22,51,39,25],[53,46,28,34,18,38,51,66,28,29,43,33,34,31,34,34,24,46,21,43,29,53],[18,25,27,44,27,33,20,29,37,36,21,21,25,29,38,20,41,37,37,21,26,20,37,20,30],[54,55,24,43,26,81,40,40,44,14,47,40,14,17,29,43,27,17,19,8,30,19,32,31,31,32,34,21,30],[17,18,17,22,14,42,22,18,31,19,23,16,22,15,19,14,19,34,11,37,20,12,21,27,28,23,9,27,36,27,21,33,25,33,27,23],[11,70,13,24,17,22,28,36,15,44],[11,20,32,23,19,19,73,18,38,39,36,47,31],[22,23,15,17,14,14,10,17,32,3],[22,13,26,21,27,30,21,22,35,22,20,25,28,22,35,22,16,21,29,29,34,30,17,25,6,14,23,28,25,31,40,22,33,37,16,33,24,41,30,24,34,17],[6,12,8,8,12,10,17,9,20,18,7,8,6,7,5,11,15,50,14,9,13,31,6,10,22,12,14,9,11,12,24,11,22,22,28,12,40,22,13,17,13,11,5,26,17,11,9,14,20,23,19,9,6,7,23,13,11,11,17,12,8,12,11,10,13,20,7,35,36,5,24,20,28,23,10,12,20,72,13,19,16,8,18,12,13,17,7,18,52,17,16,15,5,23,11,13,12,9,9,5,8,28,22,35,45,48,43,13,31,7,10,10,9,8,18,19,2,29,176,7,8,9,4,8,5,6,5,6,8,8,3,18,3,3,21,26,9,8,24,13,10,7,12,15,21,10,20,14,9,6],[33,22,35,27,23,35,27,36,18,32,31,28,25,35,33,33,28,24,29,30,31,29,35,34,28,28,27,28,27,33,31],[18,26,22,16,20,12,29,17,18,20,10,14],[17,17,11,16,16,13,13,14],[31,22,26,6,30,13,25,22,21,34,16,6,22,32,9,14,14,7,25,6,17,25,18,23,12,21,13,29,24,33,9,20,24,17,10,22,38,22,8,31,29,25,28,28,25,13,15,22,26,11,23,15,12,17,13,12,21,14,21,22,11,12,19,12,25,24],[19,37,25,31,31,30,34,22,26,25,23,17,27,22,21,21,27,23,15,18,14,30,40,10,38,24,22,17,32,24,40,44,26,22,19,32,21,28,18,16,18,22,13,30,5,28,7,47,39,46,64,34],[22,22,66,22,22],[28,10,27,17,17,14,27,18,11,22,25,28,23,23,8,63,24,32,14,49,32,31,49,27,17,21,36,26,21,26,18,32,33,31,15,38,28,23,29,49,26,20,27,31,25,24,23,35],[21,49,30,37,31,28,28,27,27,21,45,13],[11,23,5,19,15,11,16,14,17,15,12,14,16,9],[20,32,21],[15,16,15,13,27,14,17,14,15],[21],[17,10,10,11],[16,13,12,13,15,16,20],[15,13,19],[17,20,19],[18,15,20],[15,23],[21,13,10,14,11,15,14,23,17,12,17,14,9,21],[14,17,18,6],[25,23,17,25,48,34,29,34,38,42,30,50,58,36,39,28,27,35,30,34,46,46,39,51,46,75,66,20],[45,28,35,41,43,56,37,38,50,52,33,44,37,72,47,20],[80,52,38,44,39,49,50,56,62,42,54,59,35,35,32,31,37,43,48,47,38,71,56,53],[51,25,36,54,47,71,53,59,41,42,57,50,38,31,27,33,26,40,42,31,25],[26,47,26,37,42,15,60,40,43,48,30,25,52,28,41,40,34,28,41,38,40,30,35,27,27,32,44,31],[32,29,31,25,21,23,25,39,33,21,36,21,14,23,33,27],[31,16,23,21,13,20,40,13,27,33,34,31,13,40,58,24],[24,17,18,18,21,18,16,24,15,18,33,21,14],[24,21,29,31,26,18],[23,22,21,32,33,24],[30,30,21,23],[29,23,25,18],[10,20,13,18,28],[12,17,18],[20,15,16,16,25,21],[18,26,17,22],[16,15,15],[25],[14,18,19,16,14,20,28,13,28,39,40,29,25],[27,26,18,17,20],[25,25,22,19,14],[21,22,18],[10,29,24,21,21],[13],[14],[25],[20,29,22,11,14,17,17,13,21,11,19,17,18,20,8,21,18,24,21,15,27,21]];
+const ROOMS = ["Front gate","Courtyard","Front door","Grand hall","Library","Dining hall","Kitchen","Music room","Stairway","Upper room","Chapel","Bedroom","Balcony","Garden","Fountain","Tower"];
+const PIECES = [
+  {key:"belt",name:"Belt of Truth",lvl:1,xp:100,ref:"Ephesians 6:14",line:"Stand firm then, with the belt of truth buckled around your waist.",vb:"60 126 80 30"},
+  {key:"breast",name:"Breastplate of Righteousness",lvl:2,xp:250,ref:"Ephesians 6:14",line:"With the breastplate of righteousness arrayed.",vb:"60 58 80 90"},
+  {key:"shoes",name:"Shoes of the Gospel of Peace",lvl:3,xp:450,ref:"Ephesians 6:15",line:"And with your feet fitted with the readiness of the gospel of peace.",vb:"56 214 88 34"},
+  {key:"shield",name:"Shield of Faith",lvl:4,xp:700,ref:"Ephesians 6:16",line:"Take up the shield of faith, with which you can extinguish all the flaming arrows of the evil one.",vb:"10 102 68 104"},
+  {key:"helmet",name:"Helmet of Salvation",lvl:5,xp:1000,ref:"Ephesians 6:17",line:"And take the helmet of salvation.",vb:"68 2 64 60"},
+  {key:"sword",name:"Sword of the Spirit",lvl:6,xp:1400,ref:"Ephesians 6:17",line:"And the sword of the Spirit, which is the word of God.",vb:"140 28 62 166"}
+];
+const RANKS = ["Recruit","Belted","Breastplated","Shod for Peace","Shield Bearer","Helmed","Fully Armored"];
+const PIECE_SVG = {
+  belt:`<rect x="66" y="132" width="68" height="16" rx="3"/><rect x="92" y="129" width="16" height="22" rx="3"/>`,
+  breast:`<path d="M70 66 Q100 58 130 66 L134 136 Q100 146 66 136 Z"/><path d="M100 72 V132 M84 92 H116" fill="none"/>`,
+  shoes:`<path d="M70 222 h24 v18 h-32 q0 -10 8 -18 z"/><path d="M130 222 h-24 v18 h32 q0 -10 -8 -18 z"/>`,
+  shield:`<path d="M16 108 h56 v42 q0 36 -28 52 q-28 -16 -28 -52 z"/><path d="M44 118 V188 M26 140 H62" fill="none"/>`,
+  helmet:`<path d="M76 46 Q74 8 100 8 Q126 8 124 46 L124 56 L112 56 L112 38 L88 38 L88 56 L76 56 Z"/><path d="M96 8 Q100 -2 112 4 Q104 6 104 10 Z"/>`,
+  sword:`<path d="M168 34 h6 v122 l-3 8 l-3 -8 z"/><rect x="156" y="154" width="30" height="6" rx="2"/><rect x="167" y="160" width="8" height="24" rx="2"/><circle cx="171" cy="188" r="5"/>`
+};
+const BODY_SVG = `<circle class="bodyf" cx="100" cy="36" r="20"/><path class="bodyf" d="M72 64 Q100 56 128 64 L134 150 L66 150 Z"/><rect class="bodyf" x="50" y="68" width="18" height="70" rx="9"/><rect class="bodyf" x="132" y="68" width="18" height="70" rx="9"/><rect class="bodyf" x="72" y="148" width="22" height="80" rx="8"/><rect class="bodyf" x="106" y="148" width="22" height="80" rx="8"/>`;
+const ICONS = {
+  train:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h6M8 11h6"/></svg>`,
+  verses:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 6h14M5 12h14M5 18h9"/></svg>`,
+  palace:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>`,
+  armor:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="M12 8v8M9 11h6"/></svg>`,
+  prayer:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4c-1 3-4 5-4 9v6h3v-4"/><path d="M12 4c1 3 4 5 4 9v6h-3v-4"/></svg>`,
+  flame:`<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-3-1-6 1-9z"/></svg>`,
+  bulb:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5V16h8v-2.5A6 6 0 0 0 12 3z"/></svg>`,
+  speaker:`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>`,
+  mic:`<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>`
+};
+const TABS=[["train","Train"],["verses","Verses"],["palace","Mansion"],["armor","Armor"],["prayer","Prayer"]];
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const addDays=(n)=>{const d=new Date();d.setDate(d.getDate()+n);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const refOf=v=>v.custom?v.title:`${v.b} ${v.c}:${v.v1}${v.v2>v.v1?"-"+v.v2:""}`;
+const trLabel=v=>v.custom?"Custom":v.tr.toUpperCase();
+const refWord=v=>v.custom?"title":"reference";
+const idOf=v=>`${v.b}|${v.c}|${v.v1}|${v.v2}`;
+const textOf=v=>v[v.tr]||v.bsb;
+function verseParts(v){const t=v.tr==="kjv"?v.kjvParts:v.tr==="own"?v.ownParts:v.bsbParts;return t&&t.length?t:[textOf(v)];}
+
+function newVerse(s,tr){return {id:idOf(s),b:s.b,c:s.c,v1:s.v1,v2:s.v2,bsb:s.bsb,kjv:s.kjv,bsbParts:s.bsbParts,kjvParts:s.kjvParts,tr:tr||"bsb",reps:0,interval:0,ease:2.5,due:today(),unlocked:1,added:today(),note:"",room:"",image:"",lapses:0}}
+function defaultState(){
+  const pick=["John|3|16|16","Ephesians|6|10|11","Philippians|4|13|13"];
+  return {v:1,xp:0,verses:STARTER.filter(s=>pick.includes(idOf(s))).map(s=>newVerse(s)),days:{},streak:0,lastDay:"",badges:{},bedtime:"",prayedCount:0,seenLevel:0,updatedAt:0};
+}
+let S; try{S=JSON.parse(localStorage.getItem("fullarmor.v1"))}catch(e){S=null}
+if(!S||!S.verses)S=defaultState();
+function migrate(){if(!S.paths)S.paths={found:{on:true,idx:0,perDay:1,lastDay:"",tr:"bsb"},book:{on:false,bi:null,name:"",ch:0,chapters:0,perDay:2,lastDay:"",done:false,tr:"bsb"}};
+  const F=S.paths.found;if(!F.idxs){F.idxs={found:F.idx||0,kids:0};F.set="found"}
+  const B=S.paths.book;if(B.startCh==null){B.startCh=1;B.endCh=B.chapters||0;B.total=B.chapters||0}
+  if(!S.settings)S.settings={minutes:5,big:false,easy:false,speak:true};if(S.onboarded==null)S.onboarded=false}
+function applySettings(){document.documentElement.classList.toggle("big",!!S.settings.big)}
+migrate();
+
+let db=null,user=null,uid=null,sample=null,dict=null,saveTimer=null;
+function save(){S.updatedAt=Date.now();try{localStorage.setItem("fullarmor.v1",JSON.stringify(S))}catch(e){}
+  clearTimeout(saveTimer);saveTimer=setTimeout(async()=>{if(db&&uid){try{await db.collection("data/users/"+uid).doc("progress").set({json:JSON.stringify(S),updatedAt:S.updatedAt})}catch(e){}}},1200);}
+
+function level(xp=S.xp){let l=0;PIECES.forEach(p=>{if(xp>=p.xp)l=p.lvl});return l}
+function nextPiece(){return PIECES.find(p=>S.xp<p.xp)}
+function stageOf(v){if(v.reps===0)return["New","chip"];if(v.interval>=30)return["Mastered","chip good"];if(v.interval>=7)return["Strong","chip brass"];return["Learning","chip"]}
+
+let toastT;
+function toast(msg){let el=$("#toastEl");if(!el){el=document.createElement("div");el.id="toastEl";el.className="toast";document.body.appendChild(el)}el.textContent=msg;el.style.opacity=1;clearTimeout(toastT);toastT=setTimeout(()=>el.style.opacity=0,1600)}
+function award(n,why){const before=level();S.xp+=n;markDay();checkBadges();save();renderHeader();toast(`+${n} XP  ${why}`);const after=level();if(after>before)setTimeout(()=>showLevelUp(PIECES[after-1]),500)}
+function markDay(){const t=today();if(S.lastDay===t)return;const y=addDays(-1);S.streak=S.lastDay===y?S.streak+1:1;S.lastDay=t}
+
+function figureSVG(lv,hl){return `<svg viewBox="0 0 200 250" role="img" aria-label="Armor figure wearing ${lv} of 6 pieces">${BODY_SVG}${PIECES.map(p=>`<g class="${p.lvl<=lv?"pc-on":"pc-off"}${hl===p.key?" glow":""}">${PIECE_SVG[p.key]}</g>`).join("")}</svg>`}
+function pieceIcon(p,on){return `<svg viewBox="${p.vb}" aria-hidden="true"><g class="${on?"pc-on":"pc-off"}">${PIECE_SVG[p.key]}</g></svg>`}
+
+function renderHeader(){const l=level(),np=nextPiece(),prev=l?PIECES[l-1].xp:0;
+  $("#lvlname").textContent=`Lv ${l} ${RANKS[l]}  ·  ${S.xp} XP`;
+  $("#xpfill").style.width=np?Math.min(100,Math.round((S.xp-prev)/(np.xp-prev)*100))+"%":"100%";
+  const st=(S.lastDay===today()||S.lastDay===addDays(-1))?S.streak:0;
+  $("#streak").innerHTML=st?ICONS.flame+st:"";}
+
+let tab="train";
+function renderTabs(){$("#tabs").innerHTML=TABS.map(([k,l])=>`<button data-tab="${k}" ${tab===k?'aria-current="page"':""}>${ICONS[k]}${l}</button>`).join("")}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-tab]");if(b){tab=b.dataset.tab;view={};renderTabs();render();window.scrollTo(0,0);if(tab==="train"&&!session)feedPaths().then(c=>{if(c&&tab==="train"&&!session)renderTrain()})}});
+let view={};
+function render(){({train:renderTrain,verses:renderVerses,palace:renderPalace,armor:renderArmor,prayer:renderPrayer,settings:renderSettings})[tab]();}
+
+/* ---------- TRAIN ---------- */
+let session=null;
+function dueList(){return S.verses.filter(v=>v.due<=today()).sort((a,b)=>a.due.localeCompare(b.due))}
+function stemOf(w){w=String(w).toLowerCase().replace(/[’']s\b/g,"").replace(/[^a-z]/g,"");if(PICS[w])return w;
+  for(const[suf,add]of[["eth","e"],["eth",""],["es",""],["s",""],["ed","e"],["ed",""],["ing","e"],["ing",""],["est",""]]){if(w.endsWith(suf)&&w.length>suf.length+2){const b=w.slice(0,-suf.length)+add;if(PICS[b])return b}}return w}
+function autoPics(v){const map={},words=textOf(v).split(" "),lim=Math.max(4,Math.min(14,4+Math.floor(words.length/12)));let n=0;
+  for(const w of words){const s=stemOf(w);if(n>=lim)break;if(PICS[s]&&!PIC_STOP.has(s)&&!(s in map)){map[s]=PICS[s][0];n++}}return map}
+function ensurePics(v){if(!v.pics||typeof v.pics!=="object")v.pics=autoPics(v);return v.pics}
+function hasPics(v){return Object.values(ensurePics(v)).some(Boolean)}
+const cleanW=w=>w.replace(/^[^A-Za-z’']+|[^A-Za-z’']+$/g,"");
+const normW=w=>cleanW(w).toLowerCase().replace(/’/g,"'");
+function rebusHTML(v,txt){ensurePics(v);return txt.split(" ").map(w=>{const p=v.pics[stemOf(w)];if(!p)return esc(w);const tail=(w.match(/[^A-Za-z’']+$/)||[""])[0];return `<span class="pic" aria-label="${esc(cleanW(w))}">${p}</span>${esc(tail)}`}).join(" ")}
+function picStrip(v,txt){ensurePics(v);return txt.split(" ").map(w=>v.pics[stemOf(w)]).filter(Boolean).join(" ")}
+function picEditHTML(v){ensurePics(v);return textOf(v).split(" ").map(w=>{const s=stemOf(w),p=v.pics[s];return PICS[s]?`<span class="pw ${p?"on":""}" data-pw="${esc(s)}">${p?p+" ":""}${esc(w)}</span>`:esc(w)}).join(" ")}
+function shuffleArr(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}if(b.length>1&&b.every((x,i)=>x===a[i]))b.reverse();return b}
+function bankBlanks(v,words){const idx=[];words.forEach((w,i)=>{if(/[A-Za-z]{2,}/.test(w)&&!PIC_STOP.has(normW(w)))idx.push(i)});const max=S.settings.easy?4:7;if(idx.length<=max)return idx;const step=idx.length/max;return Array.from({length:max},(_,k)=>idx[Math.floor(k*step+step/2)])}
+function phrases(txt){const w=txt.split(" "),size=Math.max(3,Math.ceil(w.length/(S.settings.easy?5:8)));const out=[];let cur=[];
+  w.forEach(x=>{cur.push(x);if(cur.length>=size||(/[,;:.!?]["'”’)]*$/.test(x)&&cur.length>=2)){out.push(cur.join(" "));cur=[]}});
+  if(cur.length){if(cur.length===1&&out.length)out[out.length-1]+=" "+cur[0];else out.push(cur.join(" "))}return out}
+function modeOf(v){const r=v.reps,pic=hasPics(v),seq=["read","bank","order","fade",pic?"picture":"letters"];if(r<seq.length)return seq[r];if(S.settings.easy)return r%2?(pic?"picture":"order"):"blank";return r%2?"type":"blank"}
+const MODE_LABEL={read:"Read and recite",bank:"Word bank",order:"Put it in order",fade:"Fill the gaps",picture:"Picture cues",letters:"First letters",type:"Type first letters",blank:"From memory"};
+function canSpeak(){return S.settings.speak&&"speechSynthesis" in window}
+function finishArmor(){if(session&&session.done>0&&S.armorDay!==today()){S.armorDay=today();award(10,"Armor on for today")}}
+function startSession(){session={queue:dueList().map(v=>v.id),retry:{},done:0,total:0,start:Date.now(),limit:(S.settings.minutes||5)*60000};session.total=session.queue.length;nextCard()}
+function nextCard(){const id=session.queue[0];
+  if(!id||(session.done>0&&Date.now()-session.start>=session.limit)){session.card=null;session.finished=true;finishArmor();renderTrain();return}
+  session.card={id,revealed:false,said:0,shown:{},typed:0,miss:0,mic:"",score:null,filled:0,pool:null,tiles:null,built:0,pichint:false};renderTrain()}
+setInterval(()=>{const el=document.getElementById("timer");if(!el||!session||!session.start)return;const left=Math.max(0,session.limit-(Date.now()-session.start));el.textContent=left?`${Math.floor(left/60000)}:${String(Math.floor(left/1000)%60).padStart(2,"0")} left`:"Last one";},1000);
+function curVerse(){return S.verses.find(v=>v.id===session.card.id)}
+function chainPre(v){const u=Math.min(v.unlocked||1,verseParts(v).length);return Math.max(0,u-5)}
+function chainText(v){const parts=verseParts(v),u=Math.min(v.unlocked||1,parts.length);return parts.slice(Math.max(0,u-5),u).join(" ")}
+
+function renderTrain(){
+  const app=$("#app");
+  if(!session||!session.card){
+    if(session&&session.finished){const left=dueList().length;
+      app.innerHTML=`<div class="stack"><div class="card stack" style="align-items:center;text-align:center"><div class="figure">${figureSVG(level())}</div>
+        <div class="ref" style="font-size:22px">Armor on for today</div>
+        <p class="small muted" style="margin:0">You reviewed ${session.done} ${session.done===1?"verse":"verses"}${left?`. ${left} more will wait for your next session.`:"."}</p>
+        <p class="tagline" style="margin:0">Stand firm then, with the belt of truth buckled around your waist. Ephesians 6:14</p>
+        <div class="rowx" style="justify-content:center">${left?`<button class="btn" data-act="start">Keep going</button>`:""}<button class="btn primary" data-act="quit">Done</button></div></div></div>`;return}
+    const due=dueList().length,mastered=S.verses.filter(v=>v.interval>=30).length,mins=S.settings.minutes||5;
+    const hr=new Date().getHours(),reviewedToday=S.verses.filter(v=>v.last===today());
+    const bed=hr>=20&&reviewedToday.length&&S.bedtime!==today(),armorOn=S.armorDay===today();
+    app.innerHTML=`<div class="stack">
+      <div class="card" style="display:flex;gap:14px;align-items:center"><div style="width:76px;flex:none">${figureSVG(level())}</div><div style="min-width:0"><p class="tagline" style="margin:0">Spend ${mins} minutes a day to put on the full armor of God.</p>${armorOn?`<span class="chip good" style="margin-top:6px">Armor on today</span>`:""}</div></div>
+      ${S.onboarded?installHTML():""}
+      ${!S.onboarded?`<div class="card stack"><h3 style="margin:0">Who's training?</h3><p class="small muted" style="margin:0">This sets the starting verses and how drills work. You can change it anytime in settings.</p>
+        <div class="onb"><button data-act="onb" data-v="kid">Kid or youth<small>Short verses, tap games, no typing</small></button><button data-act="onb" data-v="adult">Adult<small>Key verses by theme, all drill types</small></button><button data-act="onb" data-v="senior">Larger text<small>Big text and buttons, read aloud</small></button></div></div>`:""}
+      ${weeklyHTML()}
+      ${bed?`<div class="card stack"><h3>Review before bed</h3><p class="small muted" style="margin:0">Your brain locks memories in while you sleep. Read today's verses once more, out loud.</p><button class="btn primary" data-act="bed">Start bedtime review</button></div>`:""}
+      ${due?`<div class="card stack"><div class="ref">${due} verse${due>1?"s":""} ready</div><p class="small muted" style="margin:0">Each verse gets harder as you learn it: read, word bank, put in order, fill gaps, picture cues, then from memory.</p><button class="btn primary" data-act="start">Put on the armor · ${mins} min</button></div>`
+      :`<div class="card empty">${ICONS.armor}<div><b>All caught up.</b></div><div class="small">Next review: ${nextDueLabel()}. Your paths add new verses each day.</div><div style="margin-top:12px"><button class="btn" data-tab="verses">See my verses</button></div></div>`}
+      <div class="stats"><div class="stat"><b>${due}</b><span>due now</span></div><div class="stat"><b>${S.verses.length}</b><span>verses</span></div><div class="stat"><b>${mastered}</b><span>mastered</span></div></div>
+      ${armorTeaser()}
+    </div>`;
+    return;}
+  const v=curVerse(),c=session.card,m=modeOf(v),parts=verseParts(v),isChain=parts.length>1,unl=Math.min(v.unlocked||1,parts.length);
+  const txt=chainText(v),words=txt.split(" ");
+  let body="";
+  if(m==="read")body=`<div class="verse">${esc(txt)}</div>`;
+  else if(m==="bank"){const B=bankBlanks(v,words);if(!c.pool)c.pool=shuffleArr(B.map(i=>({w:words[i],used:false})));
+    body=`<div class="verse">${words.map((w,i)=>{const k=B.indexOf(i);if(k<0)return esc(w);if(k<c.filled)return `<span class="hid show">${esc(w)}</span>`;return `<span class="blank ${k===c.filled?"cur":""}">${esc(w)}</span>`}).join(" ")}</div>
+    <div class="bank">${c.pool.map((p,j)=>`<button class="tilebtn" data-bank="${j}" ${p.used?"disabled":""}>${esc(cleanW(p.w))}</button>`).join("")}</div>
+    <div class="rowx small muted"><span>Tap the words in order to fill the blanks.</span>${c.miss?`<span class="chip warn">${c.miss} miss${c.miss>1?"es":""}</span>`:""}</div>`}
+  else if(m==="order"){if(!c.tiles){c.phr=phrases(txt);c.tiles=shuffleArr(c.phr.map((p,i)=>({p,i,used:false})))}
+    body=`<div class="built">${c.built?esc(c.phr.slice(0,c.built).join(" ")):`<span class="muted small">Tap the pieces in order.</span>`}</div>
+    <div class="bank">${c.tiles.map((t,j)=>`<button class="tilebtn" data-tile="${j}" ${t.used?"disabled":""}>${esc(t.p)}</button>`).join("")}</div>
+    ${c.miss?`<div class="rowx"><span class="chip warn">${c.miss} miss${c.miss>1?"es":""}</span></div>`:""}`}
+  else if(m==="picture")body=c.revealed?`<div class="verse">${esc(txt)}</div>`:`<div class="verse">${rebusHTML(v,txt)}</div><p class="small muted" style="margin:0">Say the whole verse out loud, reading the pictures as words.</p>`;
+  else if(m==="fade")body=`<div class="verse">${words.map((w,i)=>hideWord(v,i,w)?`<span class="hid ${c.shown[i]||c.revealed?"show":""}" data-reveal="${i}">${esc(w)}</span>`:`<span class="w">${esc(w)}</span>`).join(" ")}</div><p class="small muted" style="margin:0">Say the missing words, then tap a gap to check.</p>`;
+  else if(m==="letters")body=c.revealed?`<div class="verse">${esc(txt)}</div>`:`<div class="letters">${esc(firstLetters(txt))}</div>`;
+  else if(m==="type")body=`<div class="verse" data-act="focus">${words.map((w,i)=>i<c.typed?`<span class="done">${esc(w)}</span>`:`<span class="blank ${i===c.typed?"cur":""}">${esc(w)}</span>`).join(" ")}</div><input class="typebox" id="typebox" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" aria-label="Type the first letter of each word"><div class="rowx small muted"><span>Type the first letter of each word.</span><span class="counter">${c.typed}/${words.length}</span>${c.miss?`<span class="chip warn">${c.miss} miss${c.miss>1?"es":""}</span>`:""}</div>${c.typed<words.length?`<button class="btn" data-act="focus">Open keyboard</button>`:""}`;
+  else body=c.revealed?`<div class="verse">${esc(txt)}</div>`:`<div class="verse muted" style="font-style:italic">Recite it from memory, starting with the ${refWord(v)}.</div>${c.hint?`<div class="verse">${esc(words.slice(0,c.hint).join(" "))} …</div>`:""}`;
+  const canGrade=m==="read"?c.said>=3:m==="type"?c.typed>=words.length:m==="bank"?(c.pool&&c.filled>=c.pool.length):m==="order"?(c.tiles&&c.built>=c.tiles.length):(c.revealed||(m==="fade"&&Object.keys(c.shown).length));
+  const pct=Math.round(session.done/Math.max(1,session.total)*100);
+  app.innerHTML=`<div class="stack">
+    <div class="rowx"><span class="small muted">${session.done} of ${session.total} done</span><span class="chip" id="timer">${(()=>{const l=Math.max(0,session.limit-(Date.now()-session.start));return l?Math.floor(l/60000)+":"+String(Math.floor(l/1000)%60).padStart(2,"0")+" left":"Last one"})()}</span><button class="btn sm ghost" style="margin-left:auto" data-act="quit">End session</button></div>
+    <div class="progress"><i style="width:${pct}%"></i></div>
+    <div class="card stack">
+      <div class="rowx"><span class="ref">${esc(refOf(v))}</span><span class="chip">${trLabel(v)}</span><span class="chip brass">${MODE_LABEL[m]}</span>${isChain?`<span class="chip">${v.custom?"Part":"Verse"} ${unl} of ${parts.length}</span>`:""}${canSpeak()?`<button class="btn sm ghost" style="margin-left:auto" data-act="speak" aria-label="Read aloud">${ICONS.speaker}</button>`:""}</div>
+      <div class="cue">${ICONS.armor}<span>Say the ${refWord(v)} first: <b>${esc(refOf(v))}</b></span></div>
+      ${chainPre(v)?`<div class="cue">${ICONS.bulb}<span>${v.custom?`Recite parts 1-${chainPre(v)} from memory first, then keep going with part ${chainPre(v)+1} below.`:`Recite ${esc(v.b)} ${v.c}:${v.v1}-${v.v1+chainPre(v)-1} from memory first, then keep going with verse ${v.v1+chainPre(v)} below.`}</span></div>`:""}
+      ${body}
+      ${["fade","letters","type","blank"].includes(m)&&hasPics(v)&&!c.revealed?`<div class="stack" style="gap:6px"><button class="btn sm ghost" style="align-self:flex-start" data-act="pichint">${c.pichint?"Hide picture hint":"Picture hint"}</button>${c.pichint?`<div class="strip">${picStrip(v,txt)}</div>`:""}</div>`:""}
+      ${m==="read"?`<button class="btn" data-act="said">Said it aloud <span class="counter">${c.said}/3</span></button>`:""}
+      ${m==="blank"&&!c.revealed?`<div class="rowx"><button class="btn" data-act="hint">First words</button><button class="btn primary" data-act="reveal">Check my recall</button>${dict?`<button class="btn" data-act="mic">${ICONS.mic} Recite</button>`:""}</div>${c.mic?`<p class="small muted" style="margin:0">${esc(c.mic)}</p>`:""}`:""}
+      ${m==="letters"&&!c.revealed?`<button class="btn primary" data-act="reveal">Show verse</button>`:""}${m==="picture"&&!c.revealed?`<button class="btn primary" data-act="reveal">Check the words</button>`:""}
+      ${m==="fade"&&!c.revealed?`<button class="btn" data-act="reveal">Show all</button>`:""}
+      ${c.score!=null?`<div class="chip ${c.score>=85?"good":c.score>=60?"brass":"warn"}">Recited ${c.score}% of the words</div>`:""}
+      ${canGrade?`<div class="cue">${ICONS.armor}<span>Close with the ${refWord(v)}: <b>${esc(refOf(v))}</b></span></div>
+        ${v.note?`<p class="small" style="margin:0"><b>Where this hits home:</b> ${esc(v.note)}</p>`:""}
+        <div class="grades">${["hard","good","easy"].map(g=>`<button class="${g}" data-grade="${g}">${g[0].toUpperCase()+g.slice(1)}<small>${gradeLabel(v,g)}</small></button>`).join("")}</div>`:""}
+    </div></div>`;
+  if(m==="type"&&c.typed<words.length)setTimeout(()=>{const tb=$("#typebox");if(tb)tb.focus({preventScroll:true})},50);
+}
+function hideWord(v,i,w){if(!/[A-Za-z]/.test(w))return false;let h=0;const s=v.id+i;for(let k=0;k<s.length;k++)h=(h*31+s.charCodeAt(k))>>>0;return h%2===0}
+function firstLetters(t){return t.split(" ").map(w=>{const m=w.match(/^([^A-Za-z]*)([A-Za-z])[A-Za-z’'\-]*([^A-Za-z]*)$/);return m?m[1]+m[2]+m[3]:w}).join(" ")}
+function nextInterval(v,g){if(g==="hard")return 1;if(g==="good")return v.reps===0?1:v.reps===1?3:Math.round(Math.max(1,v.interval)*v.ease);return v.reps===0?2:Math.round(Math.max(2,v.interval)*v.ease*1.3)}
+function gradeLabel(v,g){const parts=verseParts(v);if(parts.length>1&&(v.unlocked||1)<parts.length&&g!=="hard"&&v.journey&&(v.dayUnlocks||0)>=S.paths.book.perDay)return"new verse tomorrow";if(parts.length>1&&(v.unlocked||1)<parts.length&&g!=="hard")return"add next verse";const n=nextInterval(v,g);return g==="hard"?"again soon":n===1?"tomorrow":n+" days"}
+function nextDueLabel(){const d=S.verses.map(v=>v.due).sort()[0];if(!d)return"none yet";if(d===addDays(1))return"tomorrow";return new Date(d+"T12:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})}
+function armorTeaser(){const l=level(),np=nextPiece();return `<div class="card" style="display:flex;gap:14px;align-items:center"><div style="width:72px;flex:none">${figureSVG(l)}</div><div class="grow" style="min-width:0"><div class="small muted">${np?"Next reward":"Fully armored"}</div><div class="ref" style="font-size:15px">${np?esc(np.name):"Stand firm"}</div>${np?`<div class="small muted">${np.xp-S.xp} XP to go</div>`:""}<button class="btn sm" style="margin-top:6px" data-tab="armor">See armor</button></div></div>`}
+
+function grade(g){const v=curVerse(),parts=verseParts(v),c=session.card;
+  if(parts.length>1&&(v.unlocked||1)<parts.length&&g!=="hard"&&v.journey&&(v.dayUnlocks||0)>=S.paths.book.perDay){v.reps++;v.interval=1;v.due=addDays(1);v.last=today();session.queue.shift();session.done++;award({good:10,easy:15}[g],"Review");nextCard();return}
+  if(parts.length>1&&(v.unlocked||1)<parts.length&&g!=="hard"){v.unlocked=(v.unlocked||1)+1;if(v.journey)v.dayUnlocks=(v.dayUnlocks||0)+1;v.last=today();session.queue.push(session.queue.shift());award(15,"New verse in the chain");session.card=null;nextCard();return}
+  const n=nextInterval(v,g);
+  if(g==="hard"){v.ease=Math.max(1.3,v.ease-.2);v.lapses++;if(!session.retry[v.id]){session.retry[v.id]=1;session.queue.push(v.id)}}
+  if(g==="easy")v.ease=Math.min(3.2,v.ease+.15);
+  const wasNew=v.reps===0,wasStrong=v.interval>=30;
+  v.reps++;v.interval=n;v.due=addDays(n);v.last=today();
+  session.queue.shift();session.done++;
+  let xp={hard:5,good:10,easy:15}[g];if(wasNew)xp+=15;if(c.score!=null&&c.score>=85)xp+=5;
+  award(xp,wasNew?"Verse learned":"Review");
+  if(!wasStrong&&v.interval>=30)setTimeout(()=>award(50,"Verse mastered"),900);
+  nextCard();}
+
+document.addEventListener("click",e=>{
+  const a=e.target.closest("[data-act]"),gr=e.target.closest("[data-grade]"),rv=e.target.closest("[data-reveal]");
+  if(gr){grade(gr.dataset.grade);return}
+  if(rv&&session&&session.card){session.card.shown[rv.dataset.reveal]=1;renderTrain();return}
+  const bk=e.target.closest("[data-bank]"),tl=e.target.closest("[data-tile]"),pw=e.target.closest("[data-pw]");
+  if(bk&&session&&session.card){const c=session.card,v=curVerse(),words=chainText(v).split(" "),B=bankBlanks(v,words),p=c.pool[+bk.dataset.bank];
+    if(!p.used&&c.filled<B.length){if(normW(p.w)===normW(words[B[c.filled]])){p.used=true;c.filled++}else c.miss++}renderTrain();return}
+  if(tl&&session&&session.card){const c=session.card,t=c.tiles[+tl.dataset.tile];
+    if(!t.used){if(t.p===c.phr[c.built]){t.used=true;c.built++}else c.miss++}renderTrain();return}
+  if(pw){const v=curEdit&&curEdit();if(!v)return;const s=pw.dataset.pw,opts=PICS[s]||[],cur=v.pics[s]||"",i=opts.indexOf(cur),nx=i<0?opts[0]:i+1<opts.length?opts[i+1]:"";v.pics[s]=nx;save();
+    document.querySelectorAll(`[data-pw="${s}"]`).forEach(el=>{el.classList.toggle("on",!!nx);const word=el.textContent.replace(/^\S+\s/,m=>/[A-Za-z]/.test(m)?m:"");el.textContent=(nx?nx+" ":"")+word});
+    const st=document.getElementById("palStrip");if(st)st.textContent=picStrip(v,textOf(v));return}
+  if(!a)return;const act=a.dataset.act;
+  if(act==="start")startSession();
+  else if(act==="quit"){session=null;renderTrain()}
+  else if(act==="said"){session.card.said++;renderTrain()}
+  else if(act==="reveal"){session.card.revealed=true;renderTrain()}
+  else if(act==="hint"){session.card.hint=(session.card.hint||0)+3;renderTrain()}
+  else if(act==="focus"){const tb=$("#typebox");if(tb)tb.focus()}
+  else if(act==="mic")recite();
+  else if(act==="pichint"){session.card.pichint=!session.card.pichint;renderTrain()}
+  else if(act==="speak"){const v=curVerse();try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(refOf(v)+". "+chainText(v)+" "+refOf(v)+".");u.rate=.9;speechSynthesis.speak(u)}catch(err){toast("Read aloud isn't available on this device")}}
+  else if(act==="bed")bedtime();
+  else if(handlers[act])handlers[act](a,e);
+});
+document.addEventListener("input",e=>{if(e.target.id!=="typebox"||!session||!session.card)return;
+  const ch=e.target.value.slice(-1);e.target.value="";if(!ch)return;
+  const v=curVerse(),words=chainText(v).split(" "),c=session.card;
+  while(c.typed<words.length&&!/[A-Za-z]/.test(words[c.typed]))c.typed++;
+  const w=words[c.typed];if(!w)return;const first=(w.match(/[A-Za-z]/)||[""])[0].toLowerCase();
+  if(ch.toLowerCase()===first){c.typed++;while(c.typed<words.length&&!/[A-Za-z]/.test(words[c.typed]))c.typed++}else{c.miss++}
+  renderTrain();});
+
+let heard="",micHooked=false;
+async function recite(){if(!dict)return;const c=session.card,v=curVerse();heard="";
+  if(!micHooked){micHooked=true;dict.onFinal(({text})=>{heard+=" "+text})}
+  const p=dict.start();c.mic="Listening… say the verse, then wait.";renderTrain();
+  try{await p;setTimeout(async()=>{try{await dict.stop()}catch(e){}
+    const target=chainText(v).toLowerCase().replace(/[^a-z\s]/g,"").split(/\s+/).filter(Boolean),said=new Set(heard.toLowerCase().replace(/[^a-z\s]/g,"").split(/\s+/));
+    const hit=target.filter(w=>said.has(w)).length;c.score=Math.round(hit/Math.max(1,target.length)*100);c.revealed=true;c.mic="";renderTrain()},Math.min(25000,4000+chainText(v).split(" ").length*500))}
+  catch(e){c.mic="The microphone isn't available here. Recite out loud, then tap Check my recall.";renderTrain()}}
+
+function bedtime(){const list=S.verses.filter(v=>v.last===today());$("#app").innerHTML=`<h2>Bedtime review</h2><div class="stack">${list.map(v=>`<div class="card stack"><div class="ref">${esc(refOf(v))}</div><div class="verse">${esc(chainText(v))}</div><div class="small muted">${esc(refOf(v))}</div></div>`).join("")}<button class="btn primary" data-act="bedDone">I read them aloud</button></div>`}
+const handlers={};
+handlers.bedDone=()=>{S.bedtime=today();award(10,"Bedtime review");session=null;renderTrain()};
+
+/* ---------- PATHS ---------- */
+async function feedPaths(){let changed=false;const t=today(),P=S.paths;
+  if(P.found.on&&P.found.lastDay!==t){const L=P.found.set==="kids"?KIDS:FOUNDATIONS;let n=0;while(n<P.found.perDay&&P.found.idxs[P.found.set]<L.length){const s=L[P.found.idxs[P.found.set]++];if(!S.verses.some(v=>v.id===idOf(s))){const nv=newVerse(s,P.found.tr||"bsb");nv.path=P.found.set==="kids"?"Young Warriors":"Foundations";nv.theme=s.t;S.verses.push(nv);n++}}P.found.lastDay=t;changed=true}
+  if(P.book.on&&P.book.lastDay!==t){P.book.lastDay=t;changed=true;
+    S.verses.forEach(v=>{if(v.journey&&(v.unlocked||1)<verseParts(v).length){v.dayUnlocks=0;if(v.due>t)v.due=t}});
+    const cur=S.verses.find(v=>v.journey&&v.b===P.book.name&&v.c===P.book.ch);
+    try{if(!cur)await addBookChapter(P.book.ch);else if((cur.unlocked||1)>=verseParts(cur).length)await addBookChapter(P.book.ch+1)}catch(e){P.book.lastDay=""}}
+  if(changed)save();return changed}
+async function addBookChapter(ch){const P=S.paths.book;const[A,K]=await Promise.all([loadBible("bsb"),loadBible("kjv")]);const bk=A[P.bi];
+  if(ch>(P.endCh||bk[1].length)){P.on=false;P.done=pathLabel(P);award(100,"Finished "+pathLabel(P));return}
+  const bp=bk[1][ch-1],kp=(K[P.bi]&&K[P.bi][1][ch-1])||[];const s={b:bk[0],c:ch,v1:1,v2:bp.length,bsb:bp.join(" "),kjv:kp.join(" "),bsbParts:bp,kjvParts:kp};
+  P.ch=ch;if(S.verses.some(v=>v.id===idOf(s)))return;
+  const nv=newVerse(s,P.tr||"bsb");nv.journey=true;nv.path=bk[0];nv.dayUnlocks=1;S.verses.push(nv)}
+function pathsHTML(){const P=S.paths.found,L=P.set==="kids"?KIDS:FOUNDATIONS,n=L.length,i=Math.min(P.idxs[P.set],n),next=L[P.idxs[P.set]];
+  return `<div class="card stack">${bookHTML()}</div>
+  <div class="card stack"><div class="seg" style="align-self:flex-start">${[["found","Foundations"],["kids","Young Warriors"]].map(([k,l])=>`<button data-act="fSet" data-v="${k}" aria-pressed="${P.set===k}">${l}</button>`).join("")}</div><div class="rowx"><h3 style="margin:0">${P.set==="kids"?"Young Warriors path":"Foundations path"}</h3><span class="chip brass">${i} of ${n}</span><button class="btn sm" style="margin-left:auto" data-act="fToggle">${P.on?"Pause":"Resume"}</button></div>
+  <div class="progress"><i style="width:${Math.round(i/n*100)}%"></i></div>
+  <p class="small muted" style="margin:0">${next?`${P.set==="kids"?"Short verses for kids and youth":"Key verses by theme"}, added for you each day. Next up: <b>${esc(next.t)}</b>, ${esc(refOf(next))}.`:"Path complete. Every verse on this path is in your rotation."}</p>
+  <div class="rowx small"><span class="muted">New per day</span><div class="seg">${[1,2,3].map(k=>`<button data-act="fPer" data-v="${k}" aria-pressed="${P.perDay===k}">${k}</button>`).join("")}</div><div class="seg" style="margin-left:auto">${["bsb","kjv"].map(k=>`<button data-act="fTr" data-v="${k}" aria-pressed="${(P.tr||"bsb")===k}">${k.toUpperCase()}</button>`).join("")}</div></div></div>`}
+const SUGGEST=["Psalms","Ephesians","Philippians","James","Proverbs","John"];
+function pathLabel(P){return P.startCh===1&&P.endCh===P.total?P.name:`${P.name} ${P.startCh}${P.endCh>P.startCh?"-"+P.endCh:""}`}
+function rangeVerses(bi,a,b){let n=0;for(let c=a;c<=b;c++)n+=VCOUNT[bi][c-1]||0;return n}
+function bookHTML(){const P=S.paths.book;
+  if(view.pickBook){const sel=view.bi??(P.bi??BOOKS.indexOf("Psalms")),nch=VCOUNT[sel].length,from=Math.min(view.bFrom??(P.on&&P.bi===sel?P.startCh:1),nch),to=Math.max(from,Math.min(view.bTo??(P.on&&P.bi===sel?P.endCh:nch),nch));
+    const nv=rangeVerses(sel,from,to),per=P.perDay||2,days=Math.ceil(nv/per),opt=(n,s)=>Array.from({length:n},(_,i)=>`<option value="${i+1}" ${s===i+1?"selected":""}>${i+1}</option>`).join("");
+    return `<h3 style="margin:0">${P.on?"Adjust your Scripture path":"Choose a Scripture path"}</h3>
+    <p class="small muted" style="margin:0">Following a sermon series? Pick the chapters your pastor is preaching, like Psalms 2-16.</p>
+    <div class="rowx">${SUGGEST.map(b=>`<button class="chip ${BOOKS[sel]===b?"brass":""}" style="cursor:pointer" data-act="bSug" data-v="${BOOKS.indexOf(b)}">${b}</button>`).join("")}</div>
+    <label class="f">Book<select id="bkSel">${BOOKS.map((b,i)=>`<option value="${i}" ${i===sel?"selected":""}>${b}</option>`).join("")}</select></label>
+    <div class="grid2"><label class="f">From chapter<select id="bkFrom">${opt(nch,from)}</select></label><label class="f">To chapter<select id="bkTo">${opt(nch,to)}</select></label></div>
+    <div class="rowx"><span class="chip brass">${esc(BOOKS[sel])} ${from===1&&to===nch?"(whole book)":from+(to>from?"-"+to:"")}</span><span class="small muted">${nv} verses · about ${days<14?days+" days":Math.round(days/7)+" weeks"} at ${per} a day</span>${from===1&&to===nch?"":`<button class="btn sm ghost" data-act="bWhole">Whole book</button>`}</div>
+    <div class="rowx"><span class="small muted">Translation</span><div class="seg">${["bsb","kjv"].map(k=>`<button data-act="bTr" data-v="${k}" aria-pressed="${(view.btr||P.tr||"bsb")===k}">${k.toUpperCase()}</button>`).join("")}</div></div>
+    ${P.on&&P.bi===sel&&P.ch>=from&&P.ch<=to?`<p class="small muted" style="margin:0">You'll keep your place in chapter ${P.ch}.</p>`:P.on?`<p class="small muted" style="margin:0">This replaces ${esc(pathLabel(P))}. Verses you've already learned stay in your list.</p>`:""}
+    <div class="rowx"><button class="btn primary" data-act="bStart">${P.on?"Save path":"Start "+esc(BOOKS[sel])}</button><button class="btn ghost" data-act="bCancel">Cancel</button></div>`}
+  if(P.on){const cur=S.verses.find(v=>v.journey&&v.b===P.name&&v.c===P.ch),u=cur?Math.min(cur.unlocked||1,verseParts(cur).length):0,len=cur?verseParts(cur).length:0,span=P.endCh-P.startCh+1,doneCh=P.ch-P.startCh;
+    return `<div class="rowx"><h3 style="margin:0">Scripture path: ${esc(pathLabel(P))}</h3><span class="chip brass">${doneCh} of ${span} chapters</span></div>
+    <div class="progress"><i style="width:${Math.round((doneCh+(len?u/len:0))/span*100)}%"></i></div>
+    <p class="small muted" style="margin:0">${esc(P.name)} ${P.ch}: verse ${u} of ${len} unlocked. Each day you add new verses and recite the chapter from the top.</p>
+    <div class="rowx small"><span class="muted">New per day</span><div class="seg">${[1,2,3].map(k=>`<button data-act="bPer" data-v="${k}" aria-pressed="${P.perDay===k}">${k}</button>`).join("")}</div>
+    ${view.bStop?`<span class="confirm">Pause ${esc(pathLabel(P))}? <button class="btn sm" data-act="bStopYes">Pause</button><button class="btn sm ghost" data-act="bStopNo">Keep going</button></span>`:`<span style="margin-left:auto" class="rowx"><button class="btn sm" data-act="bPick">Adjust</button><button class="btn sm ghost" data-act="bStop">Pause</button></span>`}</div>`}
+  return `<h3 style="margin:0">Scripture path</h3>${P.done?`<p class="small" style="margin:0"><b>You finished ${esc(P.done)}.</b></p>`:""}<p class="small muted" style="margin:0">Memorize any book or chapter range in order, like a sermon series. A verse or two a day, always reciting from the top.</p><button class="btn primary" data-act="bPick">Choose a path</button>`}
+Object.assign(handlers,{
+  fToggle(){S.paths.found.on=!S.paths.found.on;save();feedPaths().then(renderVerses)},
+  fPer(a){S.paths.found.perDay=+a.dataset.v;save();renderVerses()},
+  fTr(a){S.paths.found.tr=a.dataset.v;save();renderVerses()},
+  fSet(a){S.paths.found.set=a.dataset.v;S.paths.found.lastDay="";save();feedPaths().then(renderVerses)},
+  bPer(a){S.paths.book.perDay=+a.dataset.v;save();renderVerses()},
+  bPick(){view.pickBook=1;renderVerses()},bCancel(){view={};renderVerses()},
+  bSug(a){view.bi=+a.dataset.v;view.bFrom=null;view.bTo=null;renderVerses()},bTr(a){view.btr=a.dataset.v;renderVerses()},
+  bWhole(){const sel=view.bi??(S.paths.book.bi??BOOKS.indexOf("Psalms"));view.bi=sel;view.bFrom=1;view.bTo=VCOUNT[sel].length;renderVerses()},
+  bStop(){view.bStop=1;renderVerses()},bStopNo(){view.bStop=0;renderVerses()},
+  bStopYes(){S.paths.book.on=false;view.bStop=0;save();renderVerses()},
+  async bStart(a){const P=S.paths.book,i=+$("#bkSel").value,from=+$("#bkFrom").value,to=Math.max(from,+$("#bkTo").value);a.disabled=true;a.textContent="Loading…";
+    try{const A=await loadBible("bsb");const keep=P.on&&P.bi===i&&P.ch>=from&&P.ch<=to;
+      Object.assign(P,{on:true,bi:i,name:A[i][0],startCh:from,endCh:to,total:A[i][1].length,chapters:to,ch:keep?P.ch:from,lastDay:"",done:false,tr:view.btr||P.tr||"bsb"});
+      view={};await feedPaths();toast((keep?"Updated ":"Started ")+pathLabel(P));renderVerses()}
+    catch(e){a.disabled=false;a.textContent="Try again";toast("Couldn't load that book. Check your connection.")}}
+});
+document.addEventListener("change",e=>{const id=e.target.id;if(id==="bkSel"){view.bi=+e.target.value;view.bFrom=null;view.bTo=null;renderVerses()}
+  else if(id==="bkFrom"||id==="bkTo"){view.bi=+$("#bkSel").value;const f=+$("#bkFrom").value,t=+$("#bkTo").value;view.bFrom=f;view.bTo=id==="bkFrom"?Math.max(f,t):Math.max(f,t);if(id==="bkTo"&&t<f)view.bFrom=t;renderVerses()}});
+
+/* ---------- VERSES ---------- */
+let bible={};
+async function loadBible(tr){if(bible[tr])return bible[tr];const r=await fetch(tr+".json");bible[tr]=await r.json();return bible[tr]}
+function renderVerses(){
+  const app=$("#app");
+  if(view.adding){renderAdd();return}
+  if(view.edit){renderEdit();return}
+  app.innerHTML=`<div class="rowx"><h2 style="margin-right:auto">My verses</h2><button class="btn primary sm" data-act="add">Add verse</button></div>
+  <div class="stack" style="margin-bottom:12px">${pathsHTML()}</div><h3>All verses</h3>
+  <div class="card list">${S.verses.length?S.verses.map(v=>{const[st,cl]=stageOf(v);return `<div class="item"><div class="grow"><div class="rowx"><b>${esc(refOf(v))}</b><span class="${cl}">${st}</span>${v.journey&&(v.unlocked||1)<verseParts(v).length?`<span class="chip brass">Verse ${v.unlocked||1} of ${verseParts(v).length}</span>`:""}${v.theme?`<span class="chip">${esc(v.theme)}</span>`:""}<span class="chip">${trLabel(v)}</span>${v.room?`<span class="chip brass">${esc(v.room)}</span>`:""}</div><div class="clip">${esc(textOf(v))}</div><div class="small muted">Next: ${v.due<=today()?"today":new Date(v.due+"T12:00").toLocaleDateString(undefined,{month:"short",day:"numeric"})}</div></div><button class="btn sm" data-act="edit" data-id="${esc(v.id)}">Open</button></div>`}).join(""):`<div class="empty">No verses yet. Tap Add verse.</div>`}</div>`;}
+handlers.add=()=>{view={adding:true,src:"starter",tr:"bsb"};renderVerses()};
+handlers.edit=a=>{view={edit:a.dataset.id};renderVerses()};
+handlers.back=()=>{view={};render()};
+function renderAdd(){
+  const have=new Set(S.verses.map(v=>v.id));
+  $("#app").innerHTML=`<div class="rowx"><button class="btn sm ghost" data-act="back">Back</button><h2 style="margin:0">Add a verse</h2></div>
+  <div class="stack" style="margin-top:12px">
+    <div class="rowx"><div class="seg">${[["starter","Popular"],["any","Any verse"]].map(([k,l])=>`<button data-act="src" data-v="${k}" aria-pressed="${view.src===k}">${l}</button>`).join("")}</div>
+    ${view.src!=="own"?`<div class="seg" style="margin-left:auto">${["bsb","kjv"].map(k=>`<button data-act="tr" data-v="${k}" aria-pressed="${view.tr===k}">${k.toUpperCase()}</button>`).join("")}</div>`:""}</div>
+    <p class="small muted" style="margin:0">${view.src==="own"?"Memorize anything with the same drills: a creed, a catechism answer, a hymn, a speech, or school notes.":"Pick one translation per verse and stick with it so the wording stays sharp."}</p>
+    ${view.src==="own"?ownFormHTML():view.src==="starter"?`<div class="card list">${STARTER.map(s=>`<div class="item"><div class="grow"><b>${esc(refOf(s))}</b><div class="clip">${esc(s[view.tr])}</div></div>${have.has(idOf(s))?`<span class="chip good">Added</span>`:`<button class="btn sm" data-act="addStarter" data-id="${esc(idOf(s))}">Add</button>`}</div>`).join("")}</div>`
+    :`<div class="card stack" id="picker"><div class="muted small">Loading the full Bible…</div></div>`}
+  </div>`;
+  if(view.src==="any")buildPicker();}
+const OWN_EXAMPLES=[["The Apostles' Creed","I believe in God, the Father almighty, creator of heaven and earth."],["Catechism Q1","Q. What is the chief end of man? A. Man's chief end is to glorify God, and to enjoy him forever."],["Amazing Grace, verse 1","Amazing grace! How sweet the sound that saved a wretch like me!"]];
+function ownFormHTML(){return `<div class="card stack"><label class="f">Title<input type="text" id="ownT" maxlength="80" placeholder="The Apostles' Creed"></label>
+  <label class="f">Text to memorize<textarea id="ownX" rows="6" maxlength="6000" placeholder="I believe in God, the Father almighty, creator of heaven and earth."></textarea></label>
+  <p class="small muted" style="margin:0">Long text is split into parts by line or sentence, and parts unlock one at a time. Start each part on a new line to choose the breaks yourself.</p>
+  <div class="rowx small"><span class="muted">Try one:</span>${OWN_EXAMPLES.map((e,i)=>`<button class="chip" style="cursor:pointer" data-act="ownEx" data-i="${i}">${esc(e[0])}</button>`).join("")}</div>
+  <div class="small" id="ownErr" style="color:var(--warn)"></div>
+  <button class="btn primary" data-act="addOwn">Add to my list</button></div>`}
+function splitOwn(t){t=t.replace(/\r/g,"").trim();let lines=t.split(/\n+/).map(s=>s.replace(/\s+/g," ").trim()).filter(Boolean);
+  if(lines.length>1)return lines;
+  if(lines.length===1){lines=(t.replace(/\s+/g," ").match(/[^.!?;]+[.!?;]+["'”’)]*|[^.!?;]+$/g)||[t]).map(s=>s.trim()).filter(Boolean)}
+  const out=[];let cur="";lines.forEach(l=>{if(cur&&(cur+" "+l).split(" ").length>28){out.push(cur);cur=l}else cur=cur?cur+" "+l:l});if(cur)out.push(cur);
+  return out.length>1&&t.split(/\s+/).length<=30?[out.join(" ")]:out}
+handlers.ownEx=a=>{const e=OWN_EXAMPLES[+a.dataset.i];$("#ownT").value=e[0];$("#ownX").value=e[1]};
+handlers.addOwn=()=>{const t=$("#ownT").value.trim(),x=$("#ownX").value.trim(),err=$("#ownErr");
+  if(!t){err.textContent="Add a title so you can recite it first.";return}if(x.split(/\s+/).length<3){err.textContent="Add at least a few words to memorize.";return}
+  const parts=splitOwn(x);const v=newVerse({b:t,c:0,v1:0,v2:0,bsb:"",kjv:""},"own");
+  Object.assign(v,{id:"own|"+Date.now(),custom:true,title:t,own:parts.join(" "),ownParts:parts});
+  S.verses.push(v);save();toast("Added "+t);view={};renderVerses()};
+handlers.src=a=>{view.src=a.dataset.v;renderAdd()};
+handlers.tr=a=>{view.tr=a.dataset.v;renderAdd()};
+handlers.addStarter=a=>{const s=STARTER.find(x=>idOf(x)===a.dataset.id);S.verses.push(newVerse(s,view.tr));save();toast("Added "+refOf(s));renderAdd()};
+async function buildPicker(){
+  let B;try{B=await loadBible(view.tr)}catch(e){$("#picker").innerHTML=`<div class="small muted">Couldn't load the Bible text. Check your connection and try again.</div>`;return}
+  const p=view.pk||(view.pk={b:42,c:1,v1:1,v2:1});const book=B[p.b],ch=book[1][p.c-1]||[];
+  const opt=(n,sel)=>Array.from({length:n},(_,i)=>`<option value="${i+1}" ${sel===i+1?"selected":""}>${i+1}</option>`).join("");
+  const txt=ch.slice(p.v1-1,p.v2).join(" ");
+  $("#picker").innerHTML=`<label class="f">Book<select id="pkB">${B.map((b,i)=>`<option value="${i}" ${i===p.b?"selected":""}>${esc(b[0])}</option>`).join("")}</select></label>
+  <div class="grid2"><label class="f">Chapter<select id="pkC">${opt(book[1].length,p.c)}</select></label><div class="grid2"><label class="f">From<select id="pkV1">${opt(ch.length,p.v1)}</select></label><label class="f">To<select id="pkV2">${opt(ch.length,p.v2)}</select></label></div></div>
+  <div class="ref">${esc(book[0])} ${p.c}:${p.v1}${p.v2>p.v1?"-"+p.v2:""}</div><div class="verse" style="font-size:17px">${esc(txt)}</div>
+  ${p.v2-p.v1>=1?`<p class="small muted" style="margin:0">Passages unlock one verse at a time, always reviewed from the top.</p>`:""}
+  <button class="btn primary" data-act="addAny">Add to my verses</button>`;
+  const upd=()=>{const nb=+$("#pkB").value;if(nb!==p.b){p.b=nb;p.c=1;p.v1=1;p.v2=1}else{const nc=+$("#pkC").value;if(nc!==p.c){p.c=nc;p.v1=1;p.v2=1}else{p.v1=+$("#pkV1").value;p.v2=Math.max(p.v1,+$("#pkV2").value);if(p.v2-p.v1>11)p.v2=p.v1+11}}buildPicker()};
+  ["#pkB","#pkC","#pkV1","#pkV2"].forEach(s=>$(s).addEventListener("change",upd));}
+handlers.addAny=async()=>{const p=view.pk;const[A,K]=await Promise.all([loadBible("bsb"),loadBible("kjv")]);const bn=A[p.b][0];
+  const bp=A[p.b][1][p.c-1].slice(p.v1-1,p.v2),kp=(K[p.b]&&K[p.b][1][p.c-1]||[]).slice(p.v1-1,p.v2);
+  const s={b:bn,c:p.c,v1:p.v1,v2:p.v2,bsb:bp.join(" "),kjv:kp.join(" "),bsbParts:bp,kjvParts:kp};
+  if(S.verses.some(v=>v.id===idOf(s))){toast("Already in your verses");return}
+  S.verses.push(newVerse(s,view.tr));save();toast("Added "+refOf(s));view={};renderVerses()};
+
+function renderEdit(){const v=S.verses.find(x=>x.id===view.edit);if(!v){view={};renderVerses();return}
+  $("#app").innerHTML=`<div class="rowx"><button class="btn sm ghost" data-act="back">Back</button><h2 style="margin:0;min-width:0;overflow-wrap:anywhere">${esc(refOf(v))}</h2></div>
+  <div class="stack" style="margin-top:12px">
+    <div class="card stack"><div class="rowx">${v.custom?`<span class="chip">Custom</span>${(v.ownParts||[]).length>1?`<span class="chip">${v.ownParts.length} parts</span>`:""}`:`<div class="seg">${["bsb","kjv"].map(k=>`<button data-act="setTr" data-v="${k}" aria-pressed="${v.tr===k}">${k.toUpperCase()}</button>`).join("")}</div>`}<span class="${stageOf(v)[1]}">${stageOf(v)[0]}</span></div>
+      ${v.custom&&view.editText?`<label class="f">Title<input type="text" id="eT" maxlength="80" value="${esc(v.title)}"></label><label class="f">Text<textarea id="eX" rows="6" maxlength="6000">${esc((v.ownParts||[v.own]).join("\n"))}</textarea></label><p class="small muted" style="margin:0">Saving changed text restarts its training.</p><div class="rowx"><button class="btn primary sm" data-act="saveText">Save</button><button class="btn ghost sm" data-act="cancelText">Cancel</button></div>`
+      :`<div class="verse">${esc(textOf(v))}</div>${v.custom?`<button class="btn sm" style="align-self:flex-start" data-act="editText">Edit text</button>`:""}`}${view.trWarn?`<div class="confirm">Switching translation restarts this verse's training. <button class="btn sm" data-act="trYes">Switch</button><button class="btn sm ghost" data-act="trNo">Keep ${v.tr.toUpperCase()}</button></div>`:""}</div>
+    <div class="card stack"><h3>Where this hits home</h3><p class="small muted" style="margin:0">Link it to your own life. Connected memories last far longer.</p>
+      <textarea id="note" placeholder="Example: This is the verse I need before client calls on Mondays.">${esc(v.note)}</textarea><button class="btn" data-act="saveNote">Save note</button></div>
+    <div class="card stack"><h3>Picture cues</h3><p class="small muted" style="margin:0">Key words become pictures. Tap a word to change its picture or turn it off.</p>
+      <div class="verse" style="font-size:18px">${picEditHTML(v)}</div>
+      <div class="rowx"><button class="btn sm ghost" data-act="picAuto">Pick again</button><button class="btn sm ghost" data-act="picClear">Clear all</button></div></div>
+    <div class="card stack"><h3>Your mansion</h3><p class="small muted" style="margin:0">Give this verse a room in your mansion and picture its cues waiting there.</p>
+      <div class="strip" id="palStrip">${picStrip(v,textOf(v))}</div>
+      <label class="f">Room<select id="room"><option value="">Not placed</option>${ROOMS.map(r=>`<option ${v.room===r?"selected":""}>${r}</option>`).join("")}</select></label>
+      <label class="f">Your own scene (optional)<textarea id="img" rows="2" placeholder="A lamp on my doormat lighting up the path">${esc(v.image)}</textarea></label>
+      <button class="btn primary" data-act="savePalace">Save to mansion</button></div>
+    ${canLead&&!v.custom?`<div class="card stack"><h3>Church verse of the week</h3><p class="small muted" style="margin:0">Share this verse with everyone using the app this week.</p><button class="btn" data-act="setWeekly">Set as church verse</button></div>`:""}
+    <div class="card">${view.del?`<div class="confirm">Remove ${esc(refOf(v))} and its progress? <button class="btn sm" data-act="delYes">Remove</button><button class="btn sm ghost" data-act="delNo">Cancel</button></div>`:`<button class="btn ghost sm" data-act="del">Remove verse</button>`}</div>
+  </div>`;}
+const curEdit=()=>S.verses.find(x=>x.id===view.edit);
+handlers.setTr=a=>{const v=curEdit();if(a.dataset.v===v.tr)return;if(v.reps>0){view.trWarn=a.dataset.v;renderEdit()}else{v.tr=a.dataset.v;save();renderEdit()}};
+handlers.trYes=()=>{const v=curEdit();v.tr=view.trWarn;v.reps=0;v.interval=0;v.unlocked=1;v.due=today();view.trWarn=null;save();renderEdit()};
+handlers.trNo=()=>{view.trWarn=null;renderEdit()};
+handlers.editText=()=>{view.editText=1;renderEdit()};handlers.cancelText=()=>{view.editText=0;renderEdit()};
+handlers.saveText=()=>{const v=curEdit(),t=$("#eT").value.trim(),x=$("#eX").value.trim();if(!t||x.split(/\s+/).length<3){toast("Add a title and some text");return}
+  const parts=splitOwn(x),changed=parts.join(" ")!==v.own;v.title=t;if(changed){v.own=parts.join(" ");v.ownParts=parts;v.reps=0;v.interval=0;v.unlocked=1;v.due=today()}view.editText=0;save();toast("Saved");renderEdit()};
+handlers.saveNote=()=>{const v=curEdit(),n=$("#note").value.trim();const first=!v.note&&n;v.note=n;save();if(first)award(5,"Connection made");else toast("Saved")};
+handlers.savePalace=()=>{const v=curEdit(),r=$("#room").value,im=$("#img").value.trim();const first=!v.room&&r;v.room=r;v.image=im;save();if(first)award(10,"Placed in your mansion");else toast("Saved");renderEdit()};
+handlers.picAuto=()=>{const v=curEdit();v.pics=autoPics(v);save();renderEdit()};
+handlers.picClear=()=>{const v=curEdit();v.pics={};save();renderEdit()};
+handlers.del=()=>{view.del=1;renderEdit()};handlers.delNo=()=>{view.del=0;renderEdit()};
+handlers.delYes=()=>{S.verses=S.verses.filter(x=>x.id!==view.edit);save();view={};renderVerses()};
+
+/* ---------- PALACE ---------- */
+function renderPalace(){
+  const placed=S.verses.filter(v=>v.room);
+  if(view.walk!=null){const list=ROOMS.map(r=>placed.filter(v=>v.room===r)).flat();const i=view.walk,v=list[i];
+    if(!v){view={};renderPalace();return}
+    $("#app").innerHTML=`<div class="rowx"><button class="btn sm ghost" data-act="back">End walk</button><span class="small muted" style="margin-left:auto">Stop ${i+1} of ${list.length}</span></div>
+    <div class="card stack" style="margin-top:12px"><div class="room" style="border:0;padding:0;min-height:0"><span class="n">You walk to the</span><span class="r" style="font-size:20px">${esc(v.room)}</span></div>
+      ${hasPics(v)?`<div class="strip">${picStrip(v,textOf(v))}</div>`:""}${v.image?`<p class="image">${esc(v.image)}</p>`:""}
+      ${view.show?`<div class="ref">${esc(refOf(v))}</div><div class="verse">${esc(textOf(v))}</div>`:`<p class="small muted" style="margin:0">What verse lives here? Say the reference and the verse out loud.</p><button class="btn primary" data-act="walkShow">Reveal</button>`}
+      ${view.show?`<button class="btn primary" data-act="walkNext">${i+1<list.length?"Walk to the next room":"Finish the walk"}</button>`:""}</div>`;return;}
+  $("#app").innerHTML=`<h2>Your mansion</h2><div class="stack">
+    <p class="tagline" style="margin:0">In my Father’s house are many mansions … I go to prepare a place for you. John 14:2</p>
+    <p class="small muted" style="margin:0">Your brain remembers places and pictures far better than words. Give each verse a room, then walk through the mansion in order and let its picture cues remind you.</p>
+    ${placed.length?`<button class="btn primary" data-act="walk">Walk through my mansion (${placed.length})</button>`:""}
+    <div class="grid2">${ROOMS.map((r,i)=>{const vs=placed.filter(v=>v.room===r);return `<button class="room ${vs.length?"":"empty"}" ${vs.length?`data-act="edit" data-id="${esc(vs[0].id)}"`:`data-act="placeHint"`}><span class="n">Stop ${i+1}</span><b style="font-size:14px">${r}</b><span class="r">${vs.length?vs.map(v=>esc(refOf(v))).join(", "):"Empty"}</span></button>`}).join("")}</div>
+    ${!placed.length?`<div class="card empty">${ICONS.palace}<div><b>No rooms filled yet.</b></div><div class="small">Open any verse and use Your mansion to place it.</div></div>`:""}
+  </div>`;}
+handlers.walk=()=>{view={walk:0};renderPalace()};
+handlers.walkShow=()=>{view.show=1;renderPalace()};
+handlers.walkNext=()=>{const n=S.verses.filter(v=>v.room).length;view.walk++;view.show=0;if(view.walk>=n){view={};award(10,"Mansion walk")}renderPalace()};
+handlers.placeHint=()=>{tab="verses";view={};renderTabs();render();toast("Open a verse to place it in a room")};
+const _edit=handlers.edit;handlers.edit=a=>{if(tab!=="verses"){tab="verses";renderTabs()}_edit(a)};
+
+/* ---------- ARMOR ---------- */
+const BADGES=[
+  ["first","First verse learned",()=>S.verses.some(v=>v.reps>0)],
+  ["s3","3-day streak",()=>S.streak>=3],["s7","7-day streak",()=>S.streak>=7],["s30","30-day streak",()=>S.streak>=30],
+  ["strong5","5 verses strong",()=>S.verses.filter(v=>v.interval>=7).length>=5],["master","First verse mastered",()=>S.verses.some(v=>v.interval>=30)],
+  ["palace","Mansion builder (5 rooms)",()=>S.verses.filter(v=>v.room).length>=5],["pray","Prayer partner (5 prayers)",()=>S.prayedCount>=5]];
+function checkBadges(){BADGES.forEach(([k,,f])=>{if(!S.badges[k]&&f()){S.badges[k]=today();setTimeout(()=>toast("Badge earned"),1800)}})}
+function renderArmor(){const l=level(),np=nextPiece();
+  $("#app").innerHTML=`<h2>The full armor</h2><div class="stack">
+    <div class="card stack" style="align-items:center;text-align:center"><div class="figure">${figureSVG(l)}</div>
+      <div class="ref">Level ${l} · ${RANKS[l]}</div>
+      <div class="small muted">${np?`${np.xp-S.xp} XP until the ${esc(np.name)}`:"Every piece is yours. Keep standing firm."}</div>
+      <div class="small muted" style="font-family:var(--f-text);font-style:italic;max-width:34ch">Put on the full armor of God, so that you can make your stand. Ephesians 6:11</div></div>
+    <div class="armory">${PIECES.map(p=>`<div class="piece ${p.lvl<=l?"":"locked"}">${pieceIcon(p,p.lvl<=l)}<div><div class="t">${p.name}</div><div class="small muted">${p.lvl<=l?p.ref:`Level ${p.lvl} · ${p.xp} XP`}</div></div></div>`).join("")}</div>
+    <div class="card stack"><h3>How to earn XP</h3><div class="small muted">Review a verse +5 to +15 · Learn a new verse +15 · Master a verse +50 · Mansion room +10 · Life connection +5 · Bedtime review +10 · Pray for a friend +5</div></div>
+    <h3 style="margin-top:4px">Badges</h3><div class="badges">${BADGES.map(([k,n])=>`<div class="badge ${S.badges[k]?"on":""}"><span class="dot">${S.badges[k]?"✓":""}</span>${n}</div>`).join("")}</div>
+  </div>`;}
+function showLevelUp(p){$("#layer").innerHTML=`<div class="overlay" role="dialog" aria-modal="true" aria-label="Level up"><div class="levelup"><div class="small muted">Level ${p.lvl} reached</div><div class="glow">${pieceIcon(p,true)}</div><div class="big">${p.name}</div><p style="font-family:var(--f-text);font-style:italic;margin:0 0 6px">${esc(p.line)}</p><div class="small muted">${p.ref}</div><button class="btn primary" style="margin-top:16px;width:100%" data-act="closeLvl">Put it on</button></div></div>`}
+handlers.closeLvl=()=>{$("#layer").innerHTML="";if(tab==="armor")renderArmor()};
+
+/* ---------- CHURCH VERSE ---------- */
+let weekly=null,canLead=false;
+function weeklyHTML(){if(!weekly)return canLead?`<div class="card stack"><span class="chip brass" style="align-self:flex-start">Church verse of the week</span><p class="small muted" style="margin:0">Open any verse and tap Set as church verse to share it with everyone using the app.</p></div>`:"";
+  const have=S.verses.some(v=>v.id===idOf(weekly));
+  return `<div class="card stack"><span class="chip brass" style="align-self:flex-start">Church verse this week</span><div class="ref">${esc(refOf(weekly))}</div><div class="clip">${esc(weekly.bsb)}</div>${have?`<span class="chip good" style="align-self:flex-start">In your verses</span>`:`<button class="btn" data-act="addWeekly">Add to my verses</button>`}</div>`}
+handlers.addWeekly=()=>{if(!weekly||S.verses.some(v=>v.id===idOf(weekly)))return;S.verses.push(newVerse(weekly,S.paths.found.tr||"bsb"));save();toast("Added "+refOf(weekly));render()};
+handlers.setWeekly=async a=>{const v=curEdit();if(!db||!v)return;a.disabled=true;const d={b:v.b,c:v.c,v1:v.v1,v2:v.v2,bsb:v.bsb||"",kjv:v.kjv||"",setAt:Date.now(),setBy:uid||""};
+  if(v.bsbParts)d.bsbParts=v.bsbParts;if(v.kjvParts)d.kjvParts=v.kjvParts;
+  try{await db.doc("group/weekly").set(d);toast("Church verse set")}catch(e){toast("Only people who can edit the app can set the church verse.")}a.disabled=false};
+
+/* ---------- INSTALL ---------- */
+const STANDALONE=!!document.querySelector('meta[name="fa-standalone"]');
+let deferredPrompt=null;
+const isIOS=()=>/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+const isInstalled=()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+if(STANDALONE){
+  if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+  window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;if(tab==="train"&&!session)renderTrain()});
+  window.addEventListener("appinstalled",()=>{deferredPrompt=null;toast("Full Armor installed");if(tab==="train"&&!session)renderTrain()});
+}
+function installHTML(){if(!STANDALONE||isInstalled()||S.installDismissed)return"";
+  return `<div class="card" style="display:flex;gap:14px;align-items:center"><img src="icon-192.png" alt="" width="56" height="56" style="border-radius:14px;flex:none"><div style="min-width:0;flex:1"><b>Install Full Armor</b><div class="small muted">Add it to your home screen. It opens like an app and works offline.</div>
+  <div class="rowx" style="margin-top:8px"><button class="btn primary sm" data-act="install">Install</button><button class="btn ghost sm" data-act="installLater">Not now</button></div></div></div>`}
+handlers.install=async()=>{if(deferredPrompt){deferredPrompt.prompt();try{const r=await deferredPrompt.userChoice;if(r.outcome==="accepted")toast("Installing Full Armor")}catch(e){}deferredPrompt=null;return}
+  const ios=isIOS(),safari=/safari/i.test(navigator.userAgent)&&!/crios|fxios|edgios/i.test(navigator.userAgent);
+  const steps=ios?(safari?[["Tap Share","The square with an arrow pointing up, at the bottom of Safari."],["Tap Add to Home Screen","Scroll down the list if you don't see it."],["Tap Add","Full Armor appears on your home screen."]]
+    :[["Open this page in Safari","On iPhone, installing only works from Safari. Copy the link and paste it into Safari."],["Tap Share, then Add to Home Screen","Share is the square with an arrow pointing up."],["Tap Add","Full Armor appears on your home screen."]])
+    :[["Open your browser menu","The three dots in the top corner of Chrome or Edge."],["Tap Install app or Add to Home screen","The wording depends on your browser."],["Tap Install","Full Armor appears with your other apps."]];
+  $("#layer").innerHTML=`<div class="overlay" role="dialog" aria-modal="true" aria-label="Install Full Armor"><div class="levelup" style="text-align:left"><div class="rowx"><img src="icon-192.png" alt="" width="48" height="48" style="border-radius:12px"><div class="big" style="margin:0;font-size:19px">Install Full Armor</div></div>
+    <ol style="padding-left:20px;margin:14px 0;display:flex;flex-direction:column;gap:10px">${steps.map(([t,d])=>`<li><b>${t}</b><div class="small muted">${d}</div></li>`).join("")}</ol>
+    <button class="btn primary" style="width:100%" data-act="closeLvl">Got it</button></div></div>`};
+handlers.installLater=()=>{S.installDismissed=true;save();renderTrain();toast("You can install anytime from settings")};
+
+/* ---------- SETTINGS ---------- */
+function renderSettings(){const s=S.settings,onoff=(k)=>`<div class="seg">${[[true,"On"],[false,"Off"]].map(([val,l])=>`<button data-act="set" data-k="${k}" data-v="${val}" aria-pressed="${!!s[k]===val}">${l}</button>`).join("")}</div>`;
+  $("#app").innerHTML=`<h2>Settings</h2><div class="card">
+    <div class="setrow"><div class="grow"><b>Daily session</b><div class="small muted">How long each armor session lasts.</div></div><div class="seg">${[3,5,10].map(m=>`<button data-act="set" data-k="minutes" data-v="${m}" aria-pressed="${s.minutes===m}">${m} min</button>`).join("")}</div></div>
+    <div class="setrow"><div class="grow"><b>Larger text</b><div class="small muted">Bigger words and buttons.</div></div>${onoff("big")}</div>
+    <div class="setrow"><div class="grow"><b>Tap games only</b><div class="small muted">Skips typing drills. Good for kids and anyone who prefers tapping.</div></div>${onoff("easy")}</div>
+    <div class="setrow"><div class="grow"><b>Read aloud button</b><div class="small muted">Hear each verse read during training.</div></div>${onoff("speak")}</div>
+  </div>
+  ${STANDALONE&&!isInstalled()?`<div class="card" style="margin-top:12px"><div class="setrow"><div class="grow"><b>Install the app</b><div class="small muted">Put Full Armor on your home screen.</div></div><button class="btn sm" data-act="install">Install</button></div></div>`:""}
+  <p class="small muted">Starting verses: switch between Foundations and Young Warriors on the Verses tab.</p>`}
+handlers.set=a=>{const k=a.dataset.k,v=a.dataset.v;S.settings[k]=k==="minutes"?+v:v==="true";save();applySettings();renderSettings()};
+handlers.onb=a=>{const t=a.dataset.v;if(t==="kid"){S.paths.found.set="kids";S.paths.found.lastDay="";S.settings.easy=true}else if(t==="senior"){S.settings.big=true;S.settings.speak=true}else{S.paths.found.set="found"}
+  S.onboarded=true;save();applySettings();feedPaths().then(()=>{renderHeader();renderTrain()});toast(t==="kid"?"Young Warriors path ready":t==="senior"?"Larger text on":"Foundations path ready")};
+
+/* ---------- PRAYER ---------- */
+let prayers=[],prayState="loading",unsubP=null,names={};
+async function resolveNames(){if(!user)return;const ids=[...new Set(prayers.flatMap(p=>[p.author,...Object.keys(p.prayedBy||{})]).filter(Boolean))];try{const ps=await user.profiles(ids);ids.forEach(id=>{names[id]=(ps[id]&&ps[id].name)||"Someone"})}catch(e){}}
+function initials(n){return(n||"?").split(" ").map(s=>s[0]).join("").slice(0,2).toUpperCase()}
+function ago(t){const s=(Date.now()-t)/1000;if(s<3600)return Math.max(1,Math.round(s/60))+"m ago";if(s<86400)return Math.round(s/3600)+"h ago";return new Date(t).toLocaleDateString(undefined,{month:"short",day:"numeric"})}
+function renderPrayer(){const app=$("#app");
+  if(prayState==="off"){app.innerHTML=`<h2>Prayer cards</h2><div class="card empty">${ICONS.prayer}${typeof window.claude==="undefined"?`<div><b>Prayer cards are coming soon.</b></div><div class="small">Soon you and your friends will be able to share requests and pray for each other here.</div>`:`<div><b>Sign in to share prayer cards.</b></div><div class="small">Prayer cards are shared with friends who open this app while signed in to Claude.</div>`}</div>`;return}
+  const f=view.pf||"all",list=prayers.filter(p=>f==="all"?!p.answered:f==="mine"?p.author===uid:p.answered).sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
+  app.innerHTML=`<div class="rowx"><h2 style="margin-right:auto">Prayer cards</h2><button class="btn primary sm" data-act="newPrayer">New card</button></div>
+  <div class="stack">
+    ${weeklyHTML()}
+    ${view.compose?`<div class="card stack"><label class="f">Title<input type="text" id="pT" maxlength="80" placeholder="Example: Job interview on Friday"></label><label class="f">Request<textarea id="pB" maxlength="1200" placeholder="What should friends pray for?"></textarea></label><div class="rowx"><button class="btn primary" data-act="postPrayer">Share with friends</button><button class="btn ghost" data-act="cancelPrayer">Cancel</button></div></div>`:""}
+    <div class="seg" style="align-self:flex-start">${[["all","Active"],["mine","Mine"],["answered","Answered"]].map(([k,l])=>`<button data-act="pf" data-v="${k}" aria-pressed="${f===k}">${l}</button>`).join("")}</div>
+    ${prayState==="loading"?`<div class="card empty">Loading prayer cards…</div>`:prayState==="slow"?`<div class="card empty">Prayer cards can't be reached yet. They'll appear when your connection returns.</div>`:""}
+    ${prayState==="ready"&&!list.length?`<div class="card empty">${ICONS.prayer}<div><b>${f==="answered"?"No answered prayers yet.":"No prayer cards here yet."}</b></div><div class="small">${f==="answered"?"Mark a card answered to celebrate it here.":"Tap New card to share a request. Friends you share this app with will see it and can pray for you."}</div></div>`:""}
+    ${list.map(prayerCard).join("")}
+    <p class="small muted" style="margin:0">To pray together, share this app's link with friends. Anyone you share it with can see these cards, tap I prayed, and post their own.</p>
+  </div>`;}
+function prayerCard(p){const mine=p.author===uid,pb=p.prayedBy||{},n=Object.keys(pb).length,iPrayed=uid&&pb[uid];const ups=Object.values(p.updates||{}).sort((a,b)=>a.at-b.at);
+  return `<div class="card prayer ${p.answered?"answered":""}"><div class="who"><span class="avatar">${initials(names[p.author])}</span><b>${esc(mine?"You":names[p.author]||"Someone")}</b><span class="muted">${ago(p.createdAt||0)}</span>${p.answered?`<span class="chip good" style="margin-left:auto">Answered</span>`:""}</div>
+  <h3 style="margin-top:8px">${esc(p.title)}</h3><div class="body">${esc(p.body)}</div>
+  ${ups.map(u=>`<div class="upd"><span class="muted small">Update · ${ago(u.at)}</span><br>${esc(u.text)}</div>`).join("")}
+  <div class="rowx" style="margin-top:8px"><button class="btn sm ${iPrayed?"":"primary"}" data-act="prayed" data-id="${esc(p.id)}">${iPrayed?"You prayed":"I prayed"}</button><span class="small muted">${n?`${n} prayed${n<=3?": "+Object.keys(pb).map(k=>k===uid?"you":esc(names[k]||"someone")).join(", "):""}`:"Be the first to pray"}</span></div>
+  ${mine?(view.upd===p.id?`<div class="stack" style="margin-top:10px"><textarea id="uT" maxlength="600" placeholder="Share an update"></textarea><div class="rowx"><button class="btn sm primary" data-act="postUpd" data-id="${esc(p.id)}">Post update</button><button class="btn sm ghost" data-act="cancelUpd">Cancel</button></div></div>`
+    :view.pdel===p.id?`<div class="confirm" style="margin-top:10px">Delete this card for everyone? <button class="btn sm" data-act="pDelYes" data-id="${esc(p.id)}">Delete</button><button class="btn sm ghost" data-act="pDelNo">Cancel</button></div>`
+    :`<div class="rowx" style="margin-top:8px"><button class="btn sm ghost" data-act="upd" data-id="${esc(p.id)}">Add update</button><button class="btn sm ghost" data-act="answer" data-id="${esc(p.id)}">${p.answered?"Mark active":"Mark answered"}</button><button class="btn sm ghost" data-act="pDel" data-id="${esc(p.id)}">Delete</button></div>`):""}
+  </div>`;}
+handlers.pf=a=>{view.pf=a.dataset.v;renderPrayer()};
+handlers.newPrayer=()=>{view.compose=1;renderPrayer();setTimeout(()=>$("#pT")&&$("#pT").focus(),30)};
+handlers.cancelPrayer=()=>{view.compose=0;renderPrayer()};
+handlers.postPrayer=async a=>{const t=$("#pT").value.trim(),b=$("#pB").value.trim();if(!t){toast("Add a title first");return}a.disabled=true;
+  try{const now=Date.now();await db.collection("prayers").add({author:uid,title:t,body:b,createdAt:now,updatedAt:now,answered:false,prayedBy:{},updates:{}});view.compose=0;award(5,"Prayer card shared")}catch(e){a.disabled=false;toast(e&&e.code==="permission_denied"?"You need edit access to post. Ask the owner to share it with you.":"Couldn't post. Try again.")}};
+handlers.prayed=async a=>{const p=prayers.find(x=>x.id===a.dataset.id);if(!p||!uid||(p.prayedBy||{})[uid])return;
+  try{await db.doc("prayers/"+p.id).update({prayedBy:{[uid]:Date.now()}});S.prayedCount=(S.prayedCount||0)+1;award(5,"Prayed for a friend")}catch(e){toast("Couldn't save. Try again.")}};
+handlers.upd=a=>{view.upd=a.dataset.id;renderPrayer()};handlers.cancelUpd=()=>{view.upd=null;renderPrayer()};
+handlers.postUpd=async a=>{const t=$("#uT").value.trim();if(!t)return;const k="u"+Date.now();try{await db.doc("prayers/"+a.dataset.id).update({updates:{[k]:{text:t,at:Date.now()}},updatedAt:Date.now()});view.upd=null;renderPrayer()}catch(e){toast("Couldn't post the update.")}};
+handlers.answer=async a=>{const p=prayers.find(x=>x.id===a.dataset.id);try{await db.doc("prayers/"+p.id).update({answered:!p.answered,updatedAt:Date.now()});if(!p.answered)toast("Praise God. Marked answered.")}catch(e){toast("Couldn't save.")}};
+handlers.pDel=a=>{view.pdel=a.dataset.id;renderPrayer()};handlers.pDelNo=()=>{view.pdel=null;renderPrayer()};
+handlers.pDelYes=async a=>{try{await db.doc("prayers/"+a.dataset.id).delete();view.pdel=null}catch(e){toast("Couldn't delete.")}};
+
+/* ---------- BOOT ---------- */
+applySettings();renderTabs();renderHeader();render();
+feedPaths().then(c=>{if(c&&!session){renderHeader();render()}});
+(async()=>{
+  try{dict=await claude.use("dictation")}catch(e){dict=null}
+  try{user=await claude.use("user");db=await claude.use("db")}catch(e){}
+  if(!db||!user){prayState="off";if(tab==="prayer")renderPrayer();if(tab==="train"||tab==="verses")render();return}
+  try{const me=await user.me();uid=me&&me.id||await user.id()}catch(e){}
+  if(!uid){prayState="off";render();return}
+  try{canLead=await user.canEdit()}catch(e){canLead=false}
+  try{db.doc("group/weekly").onSnapshot(s=>{weekly=s.exists?s.data():null;if((tab==="train"&&!session)||tab==="prayer")render()},()=>{})}catch(e){}
+  try{const snap=await db.collection("data/users/"+uid).doc("progress").get();
+    if(snap.exists){const d=snap.data();if(d&&d.updatedAt>(S.updatedAt||0)){S=JSON.parse(d.json);migrate();await feedPaths();try{localStorage.setItem("fullarmor.v1",JSON.stringify(S))}catch(e){}renderHeader()}}
+    else save();}catch(e){}
+  const slow=setTimeout(()=>{if(prayState==="loading"){prayState="slow";if(tab==="prayer")renderPrayer()}},10000);
+  unsubP=db.collection("prayers").orderBy("updatedAt","desc").limit(200).onSnapshot(async snap=>{
+    prayers=snap.docs.map(d=>({id:d.id,...d.data()}));if(!snap.metadata||!snap.metadata.fromCache){clearTimeout(slow)}prayState="ready";await resolveNames();if(tab==="prayer")renderPrayer()},
+    ()=>{clearTimeout(slow);prayState="slow";if(tab==="prayer")renderPrayer()});
+  if(!session)render();
+})();
+</script>
+
+</body>
+</html>
